@@ -1,4 +1,4 @@
-AutoNexus
+AutoNexus | AI Powered Car Market Place
 ==============================
 
 This repo will be used for end to end mlops cycle, from experiment tracking, data pipeline to CI/CD, docker and aws service.
