@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/aksha/OneDrive/Desktop/AutoNexusMlOps/notebooks/mlruns/788417406836908921/0fada3f05b894470ad4c7b87eac0672e/artifacts
+end_time: 1761904529745
+entry_point_name: ''
+experiment_id: '788417406836908921'
+lifecycle_stage: active
+run_id: 0fada3f05b894470ad4c7b87eac0672e
+run_name: RandomForest_BestModel
+run_uuid: 0fada3f05b894470ad4c7b87eac0672e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761904517564
+status: 4
+tags: []
+user_id: aksha
