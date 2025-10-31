@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/aksha/OneDrive/Desktop/AutoNexusMlOps/notebooks/mlruns/947153965626856307/9d9773842e0e4057bf0a9eb44cb12853/artifacts
+end_time: 1761909094843
+entry_point_name: ''
+experiment_id: '947153965626856307'
+lifecycle_stage: active
+run_id: 9d9773842e0e4057bf0a9eb44cb12853
+run_name: resilient-croc-13
+run_uuid: 9d9773842e0e4057bf0a9eb44cb12853
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761909094640
+status: 4
+tags: []
+user_id: aksha

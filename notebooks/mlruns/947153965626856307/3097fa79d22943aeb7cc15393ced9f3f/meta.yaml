@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/aksha/OneDrive/Desktop/AutoNexusMlOps/notebooks/mlruns/947153965626856307/3097fa79d22943aeb7cc15393ced9f3f/artifacts
+end_time: 1761908831385
+entry_point_name: ''
+experiment_id: '947153965626856307'
+lifecycle_stage: active
+run_id: 3097fa79d22943aeb7cc15393ced9f3f
+run_name: thundering-robin-535
+run_uuid: 3097fa79d22943aeb7cc15393ced9f3f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761908828478
+status: 3
+tags: []
+user_id: aksha

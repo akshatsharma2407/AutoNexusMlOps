@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/aksha/OneDrive/Desktop/AutoNexusMlOps/notebooks/mlruns/947153965626856307/f17a35a11e7c425484ad87bfa2d34940/artifacts
+end_time: 1761909237803
+entry_point_name: ''
+experiment_id: '947153965626856307'
+lifecycle_stage: active
+run_id: f17a35a11e7c425484ad87bfa2d34940
+run_name: debonair-hog-304
+run_uuid: f17a35a11e7c425484ad87bfa2d34940
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761909237567
+status: 4
+tags: []
+user_id: aksha

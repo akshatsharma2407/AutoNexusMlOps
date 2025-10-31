@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/aksha/OneDrive/Desktop/AutoNexusMlOps/notebooks/mlruns/947153965626856307/619db868bf4c494ab7f6614ffcaa9147/artifacts
+end_time: 1761908446906
+entry_point_name: ''
+experiment_id: '947153965626856307'
+lifecycle_stage: active
+run_id: 619db868bf4c494ab7f6614ffcaa9147
+run_name: orderly-duck-183
+run_uuid: 619db868bf4c494ab7f6614ffcaa9147
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761908443615
+status: 3
+tags: []
+user_id: aksha
