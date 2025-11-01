@@ -23,7 +23,7 @@ stages:
     - models/prediction_pipe.joblib
     - reports/run_info.json
   register_model:
-    cmd: python src/register_model.py
+    cmd: python src/registry/register_model.py
     deps:
     - reports/run_info.json
     - src/registry/register_model.py
