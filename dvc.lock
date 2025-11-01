@@ -19,10 +19,14 @@ stages:
       hash: md5
       md5: 5589f0efdc774c0bb655f12572387d28
       size: 56396
+    - path: params.yaml
+      hash: md5
+      md5: 8cb17147c4188b1e4fa846bfb1a50ed4
+      size: 228
     - path: src/features/feature_transformation.py
       hash: md5
-      md5: ff5ab8c8bbe2ba708ab000e8c3fbb9dc
-      size: 3950
+      md5: 74d4d552af72924c0585ebdf568e79c9
+      size: 4643
     outs:
     - path: data/processed/train_processed.parquet
       hash: md5
