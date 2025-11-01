@@ -77,7 +77,7 @@ def transform_data(train: pd.DataFrame, encoder: ColumnTransformer) -> tuple[pd.
 def save_artifacts(train_processed: pd.DataFrame, trained_encoder: ColumnTransformer, interim_data_dir: str, encoder_path: str) -> None:
     try:
         os.makedirs(interim_data_dir, exist_ok=True)
-        train_processed.to_parquet(os.path.join(interim_data_dir,'trained_processed.parquet'))
+        train_processed.to_parquet(os.path.join(interim_data_dir,'train_processed.parquet'))
         joblib.dump(trained_encoder, encoder_path)
         logger.info('data and encoder saved')
     except OSError:
