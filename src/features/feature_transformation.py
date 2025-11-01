@@ -90,10 +90,13 @@ def save_artifacts(train_processed: pd.DataFrame, trained_encoder: ColumnTransfo
 
 def main() -> None:
     try:
-        train = load_data(train_path='../data/raw/train.parquet')
+        train = load_data(train_path='data/raw/train.parquet')
         encoder = create_encoder()
         train_processed, trained_encoder = transform_data(train=train, encoder=encoder)
-        save_artifacts(train_processed=train_processed, trained_encoder=trained_encoder, interim_data_dir='../data/processed', encoder_path='../models/encoder.joblib')
+        save_artifacts(train_processed=train_processed,
+                         trained_encoder=trained_encoder,
+                         interim_data_dir='data/processed',
+                         encoder_path='models/encoder.joblib')
         logger.info('main function executed')
     except:
         logger.error(f'Some unexpected error occured in {file_name} -> main function')

@@ -1,12 +1,18 @@
 import pandas as pd
 import yaml
+import json
 import os
+import mlflow
+import dagshub
 import logging
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.compose import ColumnTransformer
 import joblib
 from sklearn.pipeline import Pipeline
 from sklearn.base import BaseEstimator
+
+dagshub.init(repo_owner='akshatsharma2407', repo_name='AutoNexusMlOps', mlflow=True)
+mlflow.set_tracking_uri(uri='https://dagshub.com/akshatsharma2407/AutoNexusMlOps.mlflow')
 
 logger = logging.getLogger(name=os.path.basename(__file__))
 logger.setLevel(level='DEBUG')
@@ -97,14 +103,37 @@ def save_artifact(prediction_pipe: Pipeline,pipe_path: str) -> None:
         logger.error(f'Some unexpected error occured in {file_name} -> save_artifact function')
         raise
 
+def model_signature_and_save_run_id(regressor: BaseEstimator, train: pd.Dataframe, path: str ,run_id : int) -> None:
+    try:
+        xtrain = train.drop(columns='Price')
+        ytrain = train['Price']
+        
+        model_name = 'model'
+        signature = mlflow.models.infer_signature(model_input = xtrain, model_output = ytrain)
+        mlflow.sklearn.log_model(regressor, model_name, signature=signature)
+
+        model_info = {'run_id': run_id, 'model_name': model_name}
+
+        with open(path, 'w') as file:
+            json.dump(model_info, file)
+        logger.info('save model signature and run id')
+    except:
+        logger.error(f'Some unexpected error occured in {file_name} -> model_signature_and_save_run_id')
+        raise
+
+
 def main() -> None:
     try:
-        train_processed = load_data(data_path='../data/processed/trained_processed.parquet')
-        encoder = load_encoder('../models/encoder.joblib')
-        regressor = train_model(train_processed_df=train_processed)
-        prediction_pipe = create_pipeline(encoder=encoder, model=regressor)
-        save_artifact(prediction_pipe=prediction_pipe,pipe_path='../models/prediction_pipe.joblib')
-        logger.info('main function executed')
+        mlflow.set_experiment(experiment_name='Regressor for Deployment')
+        mlflow.sklearn.autolog()
+        with mlflow.start_run() as run:
+            train_processed = load_data(data_path='data/processed/trained_processed.parquet')
+            encoder = load_encoder('models/encoder.joblib')
+            regressor = train_model(train_processed_df=train_processed)
+            prediction_pipe = create_pipeline(encoder=encoder, model=regressor)
+            save_artifact(prediction_pipe=prediction_pipe,pipe_path='models/prediction_pipe.joblib')
+            model_signature_and_save_run_id(regressor=regressor, train=train_processed, path='reports/run_info.json', run_id=run.info.run_id)
+            logger.info('main function executed')
     except Exception:
         logger.error(f'Some unexpected error occured in {file_name} -> main function')
         raise

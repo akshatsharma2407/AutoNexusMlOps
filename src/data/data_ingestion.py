@@ -49,8 +49,8 @@ def save_data(folder_path: str, train: pd.DataFrame) -> None:
 
 def main() -> None:
     try:
-        train = load_data('../data/Exp/train.parquet')
-        save_data(folder_path='../data/raw', train=train)
+        train = load_data('data/Exp/train.parquet')
+        save_data(folder_path='data/raw', train=train)
         logger.info('main function executed successfully')
     except:
         logger.critical(f'Some Unexpected error occured in {file_name} -> load data function')
