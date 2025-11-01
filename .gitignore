@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 ANenv
 /models/
+reports/run_info.json
 
 # C extensions
 *.so

@@ -105,8 +105,9 @@ def save_artifact(prediction_pipe: Pipeline,pipe_path: str) -> None:
 
 def model_signature_and_save_run_id(regressor: BaseEstimator, train: pd.DataFrame, path: str ,run_id : int) -> None:
     try:
-        xtrain = train.drop(columns='remainder__Price')
-        ytrain = train['remainder__Price']
+        train.columns = [col.split('__')[-1] for col in train.columns]
+        xtrain = train.drop(columns='Price')
+        ytrain = train['Price']
         
         model_name = 'model'
         signature = mlflow.models.infer_signature(model_input = xtrain, model_output = ytrain)
