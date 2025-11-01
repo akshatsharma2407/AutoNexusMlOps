@@ -58,6 +58,7 @@ def create_encoder() -> BaseEstimator:
             ],
             remainder='passthrough'
         )
+        encoder.set_output(transform='pandas')
         logger.info('encoder defined')
         return encoder
     except Exception:
