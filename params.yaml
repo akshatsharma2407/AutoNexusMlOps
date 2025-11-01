@@ -1,10 +1,10 @@
 feature_transformation:
   encoding_method: 'frequency'
 train_model:
-  n_estimators : 100,
-  max_depth : 30,
-  bootstrap : 1,
-  max_features : None,
-  min_samples_leaf : 2,
-  random_state : 42,
+  n_estimators : 100
+  max_depth : 30
+  bootstrap : true
+  max_features : None
+  min_samples_leaf : 2
+  random_state : 42
   min_samples_split : 8

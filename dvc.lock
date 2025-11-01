@@ -21,8 +21,8 @@ stages:
       size: 56396
     - path: params.yaml
       hash: md5
-      md5: 5bc64a36ddfd0e5000e3b57167aacadc
-      size: 228
+      md5: c2c74a32e8cfa08c4e07ded0901d895b
+      size: 225
     - path: src/features/feature_transformation.py
       hash: md5
       md5: 74d4d552af72924c0585ebdf568e79c9
