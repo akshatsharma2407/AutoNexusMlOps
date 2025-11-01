@@ -39,7 +39,7 @@ def load_data(train_path: str) -> pd.DataFrame:
         logger.error(f'Some unexpected error occured in {file_name} -> load_data function')
         raise
 
-def create_encoder() -> BaseEstimator:
+def create_encoder() -> ColumnTransformer:
     try:
         encoder = ColumnTransformer(
             [
@@ -65,7 +65,7 @@ def create_encoder() -> BaseEstimator:
         logger.error(f'Some unexpected error occured in {file_name} -> create_encoder function')
         raise
 
-def transform_data(train: pd.DataFrame, encoder: BaseEstimator) -> tuple[pd.DataFrame, BaseEstimator]:
+def transform_data(train: pd.DataFrame, encoder: ColumnTransformer) -> tuple[pd.DataFrame, ColumnTransformer]:
     try:
         train_processed = encoder.fit_transform(train)
         logger.info('data transformed with encoder')
@@ -74,7 +74,7 @@ def transform_data(train: pd.DataFrame, encoder: BaseEstimator) -> tuple[pd.Data
         logger.error(f'Some unexpected error occured in {file_name} -> transform_data function')
         raise
 
-def save_artifacts(train_processed: pd.DataFrame, trained_encoder: BaseEstimator, interim_data_dir: str, encoder_path: str) -> None:
+def save_artifacts(train_processed: pd.DataFrame, trained_encoder: ColumnTransformer, interim_data_dir: str, encoder_path: str) -> None:
     try:
         os.makedirs(interim_data_dir, exist_ok=True)
         train_processed.to_parquet(os.path.join(interim_data_dir,'trained_processed.parquet'))
@@ -93,7 +93,7 @@ def main() -> None:
         train = load_data(train_path='../data/raw/train.parquet')
         encoder = create_encoder()
         train_processed, trained_encoder = transform_data(train=train, encoder=encoder)
-        save_artifacts(train_processed=train_processed, trained_encoder=trained_encoder, interim_data_dir='data/processed', encoder_path='models/encoder.joblib')
+        save_artifacts(train_processed=train_processed, trained_encoder=trained_encoder, interim_data_dir='../data/processed', encoder_path='../models/encoder.joblib')
         logger.info('main function executed')
     except:
         logger.error(f'Some unexpected error occured in {file_name} -> main function')
