@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 ANenv
+/models/
 
 # C extensions
 *.so
