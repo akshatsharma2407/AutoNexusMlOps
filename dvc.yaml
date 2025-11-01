@@ -1,0 +1,29 @@
+stages:
+  data_ingestion:
+    cmd: python src/data/data_ingestion.py
+    deps:
+    - src/data/data_ingestion.py
+    outs:
+    - data/raw/train.parquet
+  feature_transformation:
+    cmd: python src/features/feature_transformation.py
+    deps:
+    - data/raw/train.parquet
+    - src/features/feature_transformation.py
+    outs:
+    - data/processed/train_processed.parquet
+    - models/encoder.joblib
+  train_model:
+    cmd: python src/models/train_model.py
+    deps:
+    - data/processed/train_processed.parquet
+    - models/encoder.joblib
+    - src/models/train_model.py
+    outs:
+    - models/prediction_pipe.joblib
+    - reports/run_info.json
+  register_model:
+    cmd: python src/register_model.py
+    deps:
+    - reports/run_info.json
+    - src/registry/register_model.py
