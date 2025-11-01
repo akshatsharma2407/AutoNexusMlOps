@@ -27,6 +27,14 @@ file_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
+def load_params(params_path: str):
+    try:
+        encoding_method = yaml.safe_load(open(params_path), 'r')['feature_transformation']['encoding_method']
+        logger.info('params for feature_transformation.py loaded successfully')
+        return encoding_method
+    except:
+        logger.error(f'Unexpected error occured in {file_name} -> load_data function')
+
 def load_data(train_path: str) -> pd.DataFrame:
     try:
         train = pd.read_parquet(train_path)
@@ -39,7 +47,7 @@ def load_data(train_path: str) -> pd.DataFrame:
         logger.error(f'Some unexpected error occured in {file_name} -> load_data function')
         raise
 
-def create_encoder() -> ColumnTransformer:
+def create_encoder(encoding_method: str) -> ColumnTransformer:
     try:
         encoder = ColumnTransformer(
             [
@@ -50,7 +58,7 @@ def create_encoder() -> ColumnTransformer:
                 ),
                 (
                     'Nominal_Encoder',
-                    CountFrequencyEncoder(encoding_method='frequency'),
+                    CountFrequencyEncoder(encoding_method=encoding_method),
                     ['Brand_Name', 'Model_Name', 'Exterior_Color',
                     'Interior_Color', 'Drivetrain', 'Fuel_Type',
                     'Cylinder_Config', 'City', 'STATE']
@@ -90,8 +98,9 @@ def save_artifacts(train_processed: pd.DataFrame, trained_encoder: ColumnTransfo
 
 def main() -> None:
     try:
+        encoding_method = load_params(params_path='params.yaml')
         train = load_data(train_path='data/raw/train.parquet')
-        encoder = create_encoder()
+        encoder = create_encoder(encoding_method = encoding_method)
         train_processed, trained_encoder = transform_data(train=train, encoder=encoder)
         save_artifacts(train_processed=train_processed,
                          trained_encoder=trained_encoder,
