@@ -27,13 +27,17 @@ file_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
-def load_params(params_path: str):
+def load_params(params_path: str) -> str:
     try:
         encoding_method = yaml.safe_load(open(params_path), 'r')['feature_transformation']['encoding_method']
         logger.info('params for feature_transformation.py loaded successfully')
         return encoding_method
-    except:
-        logger.error(f'Unexpected error occured in {file_name} -> load_data function')
+    except FileNotFoundError:
+        logger.error(f'{file_name} -> load_params function: Params File does not exists at specified location')
+        raise
+    except Exception:
+        logger.error(f'Some unexpected error occured in {file_name} -> load_params function')
+        raise
 
 def load_data(train_path: str) -> pd.DataFrame:
     try:
