@@ -33,6 +33,18 @@ logger.addHandler(console_handler)
 
 file_name = os.path.basename(__file__)
 
+def load_params(params_path: str) -> dict:
+    try:
+        model_params = yaml.safe_load(open(params_path), 'r')['train_model']
+        return model_params
+    except FileNotFoundError:
+        logger.error(f'{file_name} -> load_params function: Params File does not exists at specified location')
+        raise
+    except Exception:
+        logger.error(f'Some unexpected error occured in {file_name} -> load_params function')
+        raise
+
+
 def load_data(data_path: str) -> pd.DataFrame:
     try:
         train_processed = pd.read_parquet(data_path)
@@ -58,19 +70,13 @@ def load_encoder(encoder_path: str) -> ColumnTransformer:
         raise
 
 
-def train_model(train_processed_df: pd.DataFrame) -> BaseEstimator:
+def train_model(train_processed_df: pd.DataFrame, model_params : dict) -> BaseEstimator:
     try:
         xtrain = train_processed_df.drop(columns=['remainder__Price'])
         ytrain = train_processed_df['remainder__Price'].copy()
 
         regressor = RandomForestRegressor(
-                n_estimators=100,
-                max_depth=30,
-                bootstrap=True,
-                max_features=None,
-                min_samples_leaf=2,
-                random_state=42,
-                min_samples_split=8
+                **model_params
             )
         
         regressor.fit(xtrain,ytrain)
@@ -128,9 +134,10 @@ def main() -> None:
         mlflow.set_experiment(experiment_name='Regressor for Deployment')
         mlflow.sklearn.autolog()
         with mlflow.start_run() as run:
+            model_params = load_params(params_path='params.yaml')
             train_processed = load_data(data_path='data/processed/trained_processed.parquet')
             encoder = load_encoder('models/encoder.joblib')
-            regressor = train_model(train_processed_df=train_processed)
+            regressor = train_model(train_processed_df=train_processed, model_params = model_params)
             prediction_pipe = create_pipeline(encoder=encoder, model=regressor)
             save_artifact(prediction_pipe=prediction_pipe,pipe_path='models/prediction_pipe.joblib')
             model_signature_and_save_run_id(regressor=regressor, train=train_processed, path='reports/run_info.json', run_id=run.info.run_id)
