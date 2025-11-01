@@ -45,12 +45,12 @@ def create_encoder() -> ColumnTransformer:
             [
                 (
                     'Ordinal_Encoder',
-                    OrdinalEncoder(categories=['New','Certified','Used']),
+                    OrdinalEncoder(categories=[['New','Certified','Used']]),
                     ['Stock_Type']
                 ),
                 (
                     'Nominal_Encoder',
-                    CountFrequencyEncoder(),
+                    CountFrequencyEncoder(encoding_method='frequency'),
                     ['Brand_Name', 'Model_Name', 'Exterior_Color',
                     'Interior_Color', 'Drivetrain', 'Fuel_Type',
                     'Cylinder_Config', 'City', 'STATE']

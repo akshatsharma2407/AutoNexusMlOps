@@ -1,0 +1,14 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data/data_ingestion.py
+    deps:
+    - path: src/data/data_ingestion.py
+      hash: md5
+      md5: 571902b73251800886b4d3aaf9038036
+      size: 1966
+    outs:
+    - path: data/raw/train.parquet
+      hash: md5
+      md5: 5589f0efdc774c0bb655f12572387d28
+      size: 56396
