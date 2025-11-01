@@ -4,7 +4,7 @@ train_model:
   n_estimators : 100
   max_depth : 30
   bootstrap : true
-  max_features : None
+  max_features : null
   min_samples_leaf : 2
   random_state : 42
   min_samples_split : 8
