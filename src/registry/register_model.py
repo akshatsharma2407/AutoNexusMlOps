@@ -45,7 +45,7 @@ def load_run_info(path: str):
 
 def register_model_to_staging(run_info) -> None:
     try:
-        model_uri = f'runs:/{run_info['run_id']}/{run_info['model_name']}'
+        model_uri = f"runs:/{run_info['run_id']}/{run_info['model_name']}"
 
         results = mlflow.register_model(model_uri=model_uri,name="RF_Price_Prediction_Regressor")
 
