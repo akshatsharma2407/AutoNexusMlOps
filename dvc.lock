@@ -12,3 +12,23 @@ stages:
       hash: md5
       md5: 5589f0efdc774c0bb655f12572387d28
       size: 56396
+  feature_transformation:
+    cmd: python src/features/feature_transformation.py
+    deps:
+    - path: data/raw/train.parquet
+      hash: md5
+      md5: 5589f0efdc774c0bb655f12572387d28
+      size: 56396
+    - path: src/features/feature_transformation.py
+      hash: md5
+      md5: bbe63b16e81a7eed3a589ca25ab446f3
+      size: 3942
+    outs:
+    - path: data/processed/train_processed.parquet
+      hash: md5
+      md5: 8816b361dacaa2b4a36c91e54f23e10a
+      size: 47496
+    - path: models/encoder.joblib
+      hash: md5
+      md5: 3747428754eaaf970c07f57d01309fb2
+      size: 31079

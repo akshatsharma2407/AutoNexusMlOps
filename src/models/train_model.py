@@ -103,7 +103,7 @@ def save_artifact(prediction_pipe: Pipeline,pipe_path: str) -> None:
         logger.error(f'Some unexpected error occured in {file_name} -> save_artifact function')
         raise
 
-def model_signature_and_save_run_id(regressor: BaseEstimator, train: pd.Dataframe, path: str ,run_id : int) -> None:
+def model_signature_and_save_run_id(regressor: BaseEstimator, train: pd.DataFrame, path: str ,run_id : int) -> None:
     try:
         xtrain = train.drop(columns='Price')
         ytrain = train['Price']
