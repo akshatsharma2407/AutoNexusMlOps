@@ -60,8 +60,8 @@ def load_encoder(encoder_path: str) -> ColumnTransformer:
 
 def train_model(train_processed_df: pd.DataFrame) -> BaseEstimator:
     try:
-        xtrain = train_processed_df.drop(columns='Price')
-        ytrain = train_processed_df['Price'].copy()
+        xtrain = train_processed_df.drop(columns=['remainder__Price'])
+        ytrain = train_processed_df['remainder__Price'].copy()
 
         regressor = RandomForestRegressor(
                 n_estimators=100,
