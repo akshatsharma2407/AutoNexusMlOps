@@ -35,7 +35,7 @@ file_name = os.path.basename(__file__)
 
 def load_params(params_path: str) -> dict:
     try:
-        model_params = yaml.safe_load(open(params_path), 'r')['train_model']
+        model_params = yaml.safe_load(open(params_path, 'r'))['train_model']
         return model_params
     except FileNotFoundError:
         logger.error(f'{file_name} -> load_params function: Params File does not exists at specified location')

@@ -29,7 +29,7 @@ logger.addHandler(file_handler)
 
 def load_params(params_path: str) -> str:
     try:
-        encoding_method = yaml.safe_load(open(params_path), 'r')['feature_transformation']['encoding_method']
+        encoding_method = yaml.safe_load(open(params_path,'r'))['feature_transformation']['encoding_method']
         logger.info('params for feature_transformation.py loaded successfully')
         return encoding_method
     except FileNotFoundError:
