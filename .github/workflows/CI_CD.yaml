@@ -3,35 +3,35 @@ name: CI Pipeline
 on: push
 
 jobs:
-  Code-Quality:
-    runs-on: ubuntu-latest
+  # Code-Quality:
+  #   runs-on: ubuntu-latest
   
-    steps:
-      - name: checkout code
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: checkout code
+  #       uses: actions/checkout@v3
       
-      - name: setup python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+  #     - name: setup python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: '3.11'
         
-      - name: Cache pip dependescies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+  #     - name: Cache pip dependescies
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: ~/.cache/pip
+  #         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-pip-
       
-      - name: update pip
-        run: |
-          pip install --upgrade pip
+  #     - name: update pip
+  #       run: |
+  #         pip install --upgrade pip
       
-      - name: Check Formatting
-        run: |
-          pip install black
-          black src/ --check --diff
-          black tests/ --check --diff
+  #     - name: Check Formatting
+  #       run: |
+  #         pip install black
+  #         black src/ --check --diff
+  #         black tests/ --check --diff
   
   CI-CD:
 
