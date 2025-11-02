@@ -28,7 +28,7 @@ def load_data(file_path: str) -> pd.DataFrame:
     try:
         train = pd.read_csv(
             'https://raw.githubusercontent.com/akshatsharma2407/cars_ml_test/refs/heads/master/sample_all_cols.csv'
-        )
+        ).dropna()
         logger.info("train df fetched")
         return train
     except FileNotFoundError:
