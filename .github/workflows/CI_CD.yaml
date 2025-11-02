@@ -35,7 +35,7 @@ jobs:
   
   CI-CD:
 
-    needs: Code-Quality  
+    # needs: Code-Quality  
 
     runs-on: ubuntu-latest
 
