@@ -45,11 +45,12 @@ def load_params(params_path: str) -> dict:
         raise
 
 
-def load_data(data_path: str) -> pd.DataFrame:
+def load_data(train_processed_data_path: str, train_raw_data_path: str) -> tuple[pd.DataFrame,pd.DataFrame]:
     try:
-        train_processed = pd.read_parquet(data_path)
+        train_processed_data = pd.read_parquet(train_processed_data_path)
+        train_raw_data = pd.read_parquet(train_raw_data_path)
         logger.info('train_processed df loaded')
-        return train_processed
+        return train_processed_data, train_raw_data
     except FileNotFoundError:
         logger.error(f'{file_name} -> load_data function: Data File does not exists at specified location')
         raise
@@ -109,15 +110,13 @@ def save_artifact(prediction_pipe: Pipeline,pipe_path: str) -> None:
         logger.error(f'Some unexpected error occured in {file_name} -> save_artifact function')
         raise
 
-def model_signature_and_save_run_id(regressor: BaseEstimator, train: pd.DataFrame, path: str ,run_id : int) -> None:
+def model_signature_and_save_run_id(prediction_pipe: Pipeline, train_raw_data: pd.DataFrame, path: str ,run_id : int) -> None:
     try:
-        train.columns = [col.split('__')[-1] for col in train.columns]
-        xtrain = train.drop(columns='Price')
-        ytrain = train['Price']
+        xtrain = train_raw_data.drop(columns='Price')
         
         model_name = 'model'
-        signature = mlflow.models.infer_signature(model_input = xtrain, model_output = ytrain)
-        mlflow.sklearn.log_model(regressor, model_name, signature=signature)
+        signature = mlflow.models.infer_signature(model_input = xtrain.head(5), model_output = prediction_pipe.predict(xtrain.head(5)))
+        mlflow.sklearn.log_model(prediction_pipe, model_name, signature=signature)
 
         model_info = {'run_id': run_id, 'model_name': model_name}
 
@@ -135,12 +134,12 @@ def main() -> None:
         mlflow.sklearn.autolog()
         with mlflow.start_run() as run:
             model_params = load_params(params_path='params.yaml')
-            train_processed = load_data(data_path='data/processed/trained_processed.parquet')
+            train_processed_data, train_raw_data = load_data(train_processed_data_path='data/processed/trained_processed.parquet', train_raw_data_path='data/raw/train.parquet')
             encoder = load_encoder('models/encoder.joblib')
-            regressor = train_model(train_processed_df=train_processed, model_params = model_params)
+            regressor = train_model(train_processed_df=train_processed_data, model_params = model_params)
             prediction_pipe = create_pipeline(encoder=encoder, model=regressor)
             save_artifact(prediction_pipe=prediction_pipe,pipe_path='models/prediction_pipe.joblib')
-            model_signature_and_save_run_id(regressor=regressor, train=train_processed, path='reports/run_info.json', run_id=run.info.run_id)
+            model_signature_and_save_run_id(regressor=regressor, train_raw_data=train_raw_data, path='reports/run_info.json', run_id=run.info.run_id)
             logger.info('main function executed')
     except Exception:
         logger.error(f'Some unexpected error occured in {file_name} -> main function')

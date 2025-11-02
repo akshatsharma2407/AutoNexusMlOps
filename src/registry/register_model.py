@@ -58,7 +58,7 @@ def register_model_to_staging(run_info) -> None:
         client.set_registered_model_alias(
             name=results.name,
             version=results.version,
-            alias=f'Staging_v{results.version}'
+            alias=f'Staging'
         )
     except Exception:
         logger.error(f'Some unexpected error occured in {file_name} -> register_model_to_staging function')
