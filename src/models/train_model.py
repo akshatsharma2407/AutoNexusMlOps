@@ -167,7 +167,7 @@ def main() -> None:
         with mlflow.start_run() as run:
             model_params = load_params(params_path="params.yaml")
             train_processed_data, train_raw_data = load_data(
-                train_processed_data_path="data/processed/trained_processed.parquet",
+                train_processed_data_path="data/processed/train_processed.parquet",
                 train_raw_data_path="data/raw/train.parquet",
             )
             encoder = load_encoder("models/encoder.joblib")
