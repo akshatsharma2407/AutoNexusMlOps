@@ -139,7 +139,7 @@ def main() -> None:
             regressor = train_model(train_processed_df=train_processed_data, model_params = model_params)
             prediction_pipe = create_pipeline(encoder=encoder, model=regressor)
             save_artifact(prediction_pipe=prediction_pipe,pipe_path='models/prediction_pipe.joblib')
-            model_signature_and_save_run_id(regressor=regressor, train_raw_data=train_raw_data, path='reports/run_info.json', run_id=run.info.run_id)
+            model_signature_and_save_run_id(prediction_pipe=prediction_pipe, train_raw_data=train_raw_data, path='reports/run_info.json', run_id=run.info.run_id)
             logger.info('main function executed')
     except Exception:
         logger.error(f'Some unexpected error occured in {file_name} -> main function')

@@ -79,7 +79,7 @@ def create_encoder(encoding_method: str) -> ColumnTransformer:
 
 def transform_data(train: pd.DataFrame, encoder: ColumnTransformer) -> tuple[pd.DataFrame, ColumnTransformer]:
     try:
-        train_processed = encoder.fit_transform(train)
+        train_processed = encoder.fit_transform(train.drop(columns='Price'))
         logger.info('data transformed with encoder')
         return train_processed, encoder
     except:
