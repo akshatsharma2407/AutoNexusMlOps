@@ -31,7 +31,7 @@ class TestModelLoading(unittest.TestCase):
         model_uri = f"models:/{model_name}/{model_version}"
         cls.model = mlflow.pyfunc.load_model(model_uri)
 
-        cls.holdout_data = pd.read_csv("https://raw.githubusercontent.com/akshatsharma2407/cars_ml_test/refs/heads/master/sample_all_cols.csv")
+        cls.holdout_data = pd.read_csv("https://raw.githubusercontent.com/akshatsharma2407/cars_ml_test/refs/heads/master/sample_all_cols.csv").dropna()
 
     @staticmethod
     def get_latest_model_version(model_name):
