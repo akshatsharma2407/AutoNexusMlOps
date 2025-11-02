@@ -21,13 +21,13 @@ file_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
-dagshub_token = os.getenv('DAGSHUB_PAT')
+dagshub_token = os.getenv("DAGSHUB_PAT")
 
 if not dagshub_token:
-    raise ValueError('dagshub token not set')
+    raise ValueError("dagshub token not set")
 
-os.environ['MLFLOW_TRACKING_USERNAME'] = dagshub_token
-os.environ['MLFLOW_TRACKING_PASSWORD'] = dagshub_token
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
 uri = "https://dagshub.com/akshatsharma2407/AutoNexusMlOps.mlflow"
 
