@@ -18,6 +18,7 @@ stages:
     cmd: python src/models/train_model.py
     deps:
     - data/processed/train_processed.parquet
+    - data/raw/train.parquet
     - models/encoder.joblib
     - src/models/train_model.py
     - params.yaml
