@@ -29,10 +29,12 @@ jobs:
       
       - name: Check import order
         run: |
+          pip install isort
           isort src/ --check-only --diff
           isort tests/ --check-only --diff
       
       - name: Check Formatting
         run: |
+          pip install black
           black src/ --check --diff
           black tests/ --check --diff
