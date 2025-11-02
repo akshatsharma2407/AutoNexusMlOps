@@ -26,7 +26,7 @@ logger.addHandler(file_handler)
 
 def load_data(file_path: str) -> pd.DataFrame:
     try:
-        train = pd.read_parquet(
+        train = pd.read_csv(
             "https://raw.githubusercontent.com/akshatsharma2407/cars_ml_test/refs/heads/master/sample.csv"
         ).drop(columns="Unnamed: 0")
         logger.info("train df fetched")
