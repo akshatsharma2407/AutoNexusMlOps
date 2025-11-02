@@ -1,8 +1,6 @@
 import json
 import logging
 import os
-
-import dagshub
 import joblib
 import mlflow
 import pandas as pd
@@ -12,7 +10,14 @@ from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.pipeline import Pipeline
 
-dagshub.init(repo_owner="akshatsharma2407", repo_name="AutoNexusMlOps", mlflow=True)
+dagshub_token = os.getenv("DAGSHUB_PAT")
+
+if not dagshub_token:
+    raise ValueError("DAGSHUB_PAT envir" "onment variable is not set")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+
 mlflow.set_tracking_uri(
     uri="https://dagshub.com/akshatsharma2407/AutoNexusMlOps.mlflow"
 )

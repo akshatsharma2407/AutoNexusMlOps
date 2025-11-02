@@ -1,8 +1,6 @@
 import json
 import logging
 import os
-
-import dagshub
 import mlflow
 from mlflow.tracking import MlflowClient
 
@@ -23,8 +21,15 @@ file_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
+dagshub_token = os.getenv('DAGSHUB_PAT')
+
+if not dagshub_token:
+    raise ValueError('dagshub token not set')
+
+os.environ['MLFLOW_TRACKING_USERNAME'] = dagshub_token
+os.environ['MLFLOW_TRACKING_PASSWORD'] = dagshub_token
+
 uri = "https://dagshub.com/akshatsharma2407/AutoNexusMlOps.mlflow"
-dagshub.init(repo_owner="akshatsharma2407", repo_name="AutoNexusMlOps", mlflow=True)
 
 mlflow.set_tracking_uri(uri=uri)
 client = MlflowClient(tracking_uri=uri)
