@@ -4,6 +4,7 @@
 # aiohttp-retry~=2.9.1
 # aioitertools~=0.12.0
 # aiosignal~=1.4.0
+feature_engine~=1.9.3
 alembic~=1.17.0
 amqp~=5.3.1
 annotated-doc~=0.0.3
