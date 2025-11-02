@@ -59,13 +59,12 @@ def load_params(params_path: str) -> dict:
 
 
 def load_data(
-    train_processed_data_path: str, train_raw_data_path: str
-) -> tuple[pd.DataFrame, pd.DataFrame]:
+    train_raw_data_path: str
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     try:
-        train_processed_data = pd.read_parquet(train_processed_data_path)
         train_raw_data = pd.read_parquet(train_raw_data_path)
-        logger.info("train_processed df loaded")
-        return train_processed_data, train_raw_data
+        logger.info("train_raw df loaded")
+        return train_raw_data
     except FileNotFoundError:
         logger.error(
             f"{file_name} -> load_data function: Data File does not exists at specified location"
@@ -95,14 +94,9 @@ def load_encoder(encoder_path: str) -> ColumnTransformer:
         raise
 
 
-def train_model(train_processed_df: pd.DataFrame, model_params: dict) -> BaseEstimator:
+def create_model(model_params: dict) -> BaseEstimator:
     try:
-        xtrain = train_processed_df.drop(columns=["remainder__Price"])
-        ytrain = train_processed_df["remainder__Price"].copy()
-
         regressor = RandomForestRegressor(**model_params)
-
-        regressor.fit(xtrain, ytrain)
         logger.info("model training done")
         return regressor
     except Exception:
@@ -112,9 +106,10 @@ def train_model(train_processed_df: pd.DataFrame, model_params: dict) -> BaseEst
         raise
 
 
-def create_pipeline(encoder: BaseEstimator, model: BaseEstimator) -> Pipeline:
+def train_pipeline(encoder: BaseEstimator, model: BaseEstimator, train_raw_data: pd.DataFrame) -> Pipeline:
     try:
         prediction_pipe = Pipeline([("Encoder", encoder), ("Regressor", model)])
+        prediction_pipe.fit(train_raw_data.drop(columns='Price'),train_raw_data['Price'])
         logger.info("encoder + model -> pipeline created")
         return prediction_pipe
     except Exception:
@@ -166,15 +161,14 @@ def main() -> None:
         mlflow.sklearn.autolog()
         with mlflow.start_run() as run:
             model_params = load_params(params_path="params.yaml")
-            train_processed_data, train_raw_data = load_data(
-                train_processed_data_path="data/processed/train_processed.parquet",
-                train_raw_data_path="data/raw/train.parquet",
+            train_raw_data = load_data(
+                train_raw_data_path="data/raw/train.parquet"
             )
             encoder = load_encoder("models/encoder.joblib")
-            regressor = train_model(
-                train_processed_df=train_processed_data, model_params=model_params
+            regressor = create_model(
+                model_params=model_params
             )
-            prediction_pipe = create_pipeline(encoder=encoder, model=regressor)
+            prediction_pipe = train_pipeline(encoder=encoder, model=regressor, train_raw_data=train_raw_data)
             save_artifact(
                 prediction_pipe=prediction_pipe,
                 pipe_path="models/prediction_pipe.joblib",

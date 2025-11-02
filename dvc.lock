@@ -5,37 +5,33 @@ stages:
     deps:
     - path: src/data/data_ingestion.py
       hash: md5
-      md5: 54c7c68955aa9234dcfac14140d4480a
-      size: 2094
+      md5: 0cd13358cc342d5ce6e0a1c4f1029faf
+      size: 2206
     outs:
     - path: data/raw/train.parquet
       hash: md5
-      md5: b8ea92675da0121a49eed3063daf71be
-      size: 57101
+      md5: 8555aa6227b2f33d59e33677a28d2cff
+      size: 60224
   feature_transformation:
     cmd: python src/features/feature_transformation.py
     deps:
     - path: data/raw/train.parquet
       hash: md5
-      md5: b8ea92675da0121a49eed3063daf71be
-      size: 57101
+      md5: 8555aa6227b2f33d59e33677a28d2cff
+      size: 60224
     - path: params.yaml
       hash: md5
       md5: 054d88c95c565fc236d24ee7cc234fdd
       size: 222
     - path: src/features/feature_transformation.py
       hash: md5
-      md5: 1e25c09c3810b22a77c5a828f1db5404
-      size: 5126
+      md5: 1fb58b180c3343f7f7d3187d841df379
+      size: 5395
     outs:
-    - path: data/processed/train_processed.parquet
-      hash: md5
-      md5: fc33597bc2dc4958b70f907a75226cbd
-      size: 42128
     - path: models/encoder.joblib
       hash: md5
-      md5: 27c9e4b5f969e41188edea65f7205172
-      size: 31573
+      md5: 7140bb6cdd4c086527838c5b797c1e2d
+      size: 965
   train_model:
     cmd: python src/models/train_model.py
     deps:

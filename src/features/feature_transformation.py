@@ -1,11 +1,9 @@
 import logging
 import os
-
 import joblib
 import pandas as pd
 import yaml
 from feature_engine.encoding import CountFrequencyEncoder
-from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
 
@@ -102,32 +100,12 @@ def create_encoder(encoding_method: str) -> ColumnTransformer:
         raise
 
 
-def transform_data(
-    train: pd.DataFrame, encoder: ColumnTransformer
-) -> tuple[pd.DataFrame, ColumnTransformer]:
-    try:
-        train_processed = encoder.fit_transform(train.drop(columns="Price"))
-        logger.info("data transformed with encoder")
-        return train_processed, encoder
-    except:
-        logger.error(
-            f"Some unexpected error occured in {file_name} -> transform_data function"
-        )
-        raise
-
-
 def save_artifacts(
-    train_processed: pd.DataFrame,
-    trained_encoder: ColumnTransformer,
-    interim_data_dir: str,
+    encoder: ColumnTransformer,
     encoder_path: str,
 ) -> None:
     try:
-        os.makedirs(interim_data_dir, exist_ok=True)
-        train_processed.to_parquet(
-            os.path.join(interim_data_dir, "train_processed.parquet")
-        )
-        joblib.dump(trained_encoder, encoder_path)
+        joblib.dump(encoder, encoder_path)
         logger.info("data and encoder saved")
     except OSError:
         logger.error(f"OS Error occured in {file_name} -> save_artifacts")
@@ -142,13 +120,9 @@ def save_artifacts(
 def main() -> None:
     try:
         encoding_method = load_params(params_path="params.yaml")
-        train = load_data(train_path="data/raw/train.parquet")
         encoder = create_encoder(encoding_method=encoding_method)
-        train_processed, trained_encoder = transform_data(train=train, encoder=encoder)
         save_artifacts(
-            train_processed=train_processed,
-            trained_encoder=trained_encoder,
-            interim_data_dir="data/processed",
+            encoder=encoder,
             encoder_path="models/encoder.joblib",
         )
         logger.info("main function executed")

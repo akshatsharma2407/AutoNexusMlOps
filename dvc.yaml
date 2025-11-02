@@ -12,12 +12,10 @@ stages:
     - src/features/feature_transformation.py
     - params.yaml
     outs:
-    - data/processed/train_processed.parquet
     - models/encoder.joblib
   train_model:
     cmd: python src/models/train_model.py
     deps:
-    - data/processed/train_processed.parquet
     - data/raw/train.parquet
     - models/encoder.joblib
     - src/models/train_model.py
