@@ -13,7 +13,7 @@ class TestModelLoading(unittest.TestCase):
     def setUpClass(cls):
         dagshub_token = os.getenv("DAGSHUB_PAT")
         if not dagshub_token:
-            raise ValueError("DAGSHUB_PAT envir" "onment variable is not set")
+            raise ValueError("DAGSHUB_PAT environment variable is not set")
 
         os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
         os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
@@ -31,7 +31,7 @@ class TestModelLoading(unittest.TestCase):
         model_uri = f"models:/{model_name}/{model_version}"
         cls.model = mlflow.pyfunc.load_model(model_uri)
 
-        cls.holdout_data = pd.read_parquet("data/Exp/test.parquet")
+        cls.holdout_data = pd.read_parquet("https://raw.githubusercontent.com/akshatsharma2407/cars_ml_test/refs/heads/master/sample_all_cols.csv")
 
     @staticmethod
     def get_latest_model_version(model_name):
