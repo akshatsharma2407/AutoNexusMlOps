@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from database import Base
+from FastApi_app.database import Base
 
 class Cars(Base):
     __tablename__ = "Cars"
