@@ -10,7 +10,7 @@ def access_dagshub():
 def get_latest_model_version(model_name: str):
     access_dagshub()
     client = MlflowClient()
-    latest_version = client.get_model_version_by_alias(model_name, 'Staging')
+    latest_version = client.get_model_version_by_alias(model_name, 'Production')
     return latest_version.version if latest_version else None
 
 model = None
