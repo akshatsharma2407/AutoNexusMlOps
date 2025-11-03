@@ -6,6 +6,8 @@
 # aiosignal~=1.4.0
 isort
 black
+mysql-connector-python
+mysql
 feature_engine~=1.9.3
 alembic~=1.17.0
 amqp~=5.3.1
