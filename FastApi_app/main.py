@@ -1,11 +1,10 @@
-import crud, schemas, models
-from sklearn.pipeline import Pipeline
+from FastApi_app import crud, schemas
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, HTTPException, Depends, Path, Query
 from typing import List
-from database import SessionLocal, Base, engine
-from prediction import prediction
-from load_model import load_model
+from FastApi_app.database import SessionLocal, Base, engine
+from FastApi_app.prediction import prediction
+from FastApi_app.load_model import load_model
 
 Base.metadata.create_all(bind=engine)
 

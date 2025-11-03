@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import asc, desc
-import schemas, models
+from FastApi_app import schemas, models
 
 def get_cars(db: Session, sortby: str = "id", orderby: str = "asc"):
     sort_column = getattr(models.Cars, sortby)
