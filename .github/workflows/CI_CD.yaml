@@ -76,4 +76,10 @@ jobs:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: |
           python -m unittest tests/test_model.py
+      
+      - name: promote model
+        env: 
+          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+        run: |
+          python src/registry/promote_model.py
 
