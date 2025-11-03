@@ -1,10 +1,15 @@
 from mlflow.client import MlflowClient
-import dagshub
+import os
 import mlflow
 
 def access_dagshub():
     uri = 'https://dagshub.com/akshatsharma2407/AutoNexusMlOps.mlflow'
-    dagshub.init(repo_owner='akshatsharma2407', repo_name='AutoNexusMlOps', mlflow=True)
+    dagshub_token = os.getenv('DAGSHUB_PAT')
+    if not dagshub_token:
+        raise ValueError('Dagshub token not set')
+    
+    os.environ['MLFLOW_TRACKING_USERNAME'] = dagshub_token
+    os.environ['MLFLOW_TRACKING_PASSWORD'] = dagshub_token
     mlflow.set_tracking_uri(uri=uri)
 
 def get_latest_model_version(model_name: str):

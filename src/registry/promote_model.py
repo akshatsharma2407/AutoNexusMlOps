@@ -1,4 +1,5 @@
 import mlflow
+from mlflow.client import MlflowClient
 import os
 
 def promote_model():
@@ -11,7 +12,7 @@ def promote_model():
 
     mlflow.set_tracking_uri('https://dagshub.com/akshatsharma2407/cars_ml_test.mlflow')
 
-    client = mlflow.MlflowClient()
+    client = MlflowClient()
 
     model_name = "RF_Price_Prediction_Regressor"
 
