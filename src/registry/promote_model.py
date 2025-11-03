@@ -10,7 +10,7 @@ def promote_model():
     os.environ['MLFLOW_TRACKING_USERNAME'] = dagshub_token
     os.environ['MLFLOW_TRACKING_PASSWORD'] = dagshub_token
 
-    mlflow.set_tracking_uri('https://dagshub.com/akshatsharma2407/cars_ml_test.mlflow')
+    mlflow.set_tracking_uri('https://dagshub.com/akshatsharma2407/AutoNexusMlOps.mlflow')
 
     client = MlflowClient()
 
