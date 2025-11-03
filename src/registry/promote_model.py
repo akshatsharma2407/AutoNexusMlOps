@@ -44,4 +44,3 @@ def promote_model():
 
 if __name__ == "__main__":
     promote_model()
-
