@@ -2,26 +2,28 @@ from sqlalchemy.orm import Session
 from sqlalchemy import asc, desc
 from FastApi_app import schemas, models
 
-def get_cars(db: Session, sortby: str = "id", orderby: str = "asc"):
-    sort_column = getattr(models.Cars, sortby)
+def get_cars(db: Session,brand_name: str, model_name: str,page : int, limit : int, sortby: str = "id", orderby: str = "asc"):
+    sort_column = getattr(models.Car, sortby)
     if orderby == "asc":
         sort_column = asc(sort_column)
     else:
         sort_column = desc(sort_column)
-    return db.query(models.Cars).order_by(sort_column).all()
+    
+    skip = (page - 1)*limit
+    search_pattern = f"%{model_name}%"
+    return db.query(models.Car).filter(models.Car.Brand_Name == brand_name, models.Car.Model_Name.ilike(search_pattern)).order_by(sort_column).offset(skip).limit(limit).all()
 
 def get_car(db: Session, id: int):
     return (
         db
-        .query(models.Cars)
-        .filter(models.Cars.id == id)
+        .query(models.Car)
+        .filter(models.Car.id == id)
         .first()
     )
 
 def create_car(db: Session, new_car: schemas.CarCreate):
-    db_car = models.Cars(
-        name=new_car.name,
-        price=new_car.price
+    db_car = models.Car(
+        **new_car.model_dump()
     )
 
     db.add(db_car)
@@ -30,9 +32,10 @@ def create_car(db: Session, new_car: schemas.CarCreate):
     return db_car
 
 def update_car(db: Session, id: int, update_car: schemas.CarUpdate):
-    db_car = db.query(models.Cars).filter(models.Cars.id == id).first()
+    db_car = db.query(models.Car).filter(models.Car.id == id).first()
     if db_car:
         updated_info = update_car.model_dump(exclude_unset=True)
+        updated_info.update({'id' : id})
         for key, value in updated_info.items():
             setattr(db_car, key, value)
         db.commit()
@@ -40,7 +43,7 @@ def update_car(db: Session, id: int, update_car: schemas.CarUpdate):
     return db_car
 
 def delete_car(db: Session, id: int):
-    db_car = db.query(models.Cars).filter(models.Cars.id == id).first()
+    db_car = db.query(models.Car).filter(models.Car.id == id).first()
     if db_car:
         db.delete(db_car)
         db.commit()
