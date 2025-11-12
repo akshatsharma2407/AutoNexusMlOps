@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h2 class="title">Results for "{{ model | title }}"</h2>
+
+  {% if cars|length == 0 %}
+    <p>No cars found for "{{ model }}".</p>
+  {% else %}
+    <div class="listings">
+      {% for car in cars %}
+        <div class="listing-row">
+          <div class="listing-image">
+            <img src="{{ car.Image_List[0] }}" alt="{{ car.Model_Name }}">
+          </div>
+          <div class="listing-info">
+            <h5>{{ car.Stock_Type }}</h5>
+            <h3>{{ car.Model_Year ~ ' ' ~ car.Brand_Name + ' ' + car.Model_Name }}</h3>
+            <p>${{ car.Price }}</p>
+            <h6>{{ car.Mileage }}mi.</h6>
+            <p>{{ car.Seller_Name }}</p>
+            <p>{{ car.City.title() + ', ' + car.STATE.title() }}</p>
+            <br>
+            <p>
+              <a href="/cars/{{ car.id }}" class="details-link">View details</a>
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

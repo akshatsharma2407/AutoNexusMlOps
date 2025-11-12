@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="car-detail">
+
+    <!-- Image Gallery -->
+    <div class="image-gallery">
+        <!-- Main large image (first image) -->
+        <div class="main-image">
+            <img src="{{ car.Image_List[0] }}" alt="{{ car.Brand_Name }} {{ car.Model_Name }}">
+        </div>
+
+        <!-- Thumbnail list (remaining images) -->
+        <div class="thumbnail-images">
+            {% for img in car.Image_List[2:6] %}
+                <img src="{{ img.replace('/small/' , '/large/') }}" alt="{{ car.Brand_Name }} {{ car.Model_Name }}">
+            {% endfor %}
+        </div>
+    </div>
+
+    <p>{{ car.Stock_Type }}</p>
+    <h2>{{ car.Model_Year }} {{ car.Brand_Name }} {{ car.Model_Name }}</h2>
+    <h1>${{ car.Price }}</h1>
+
+    <h2><b>Key Specs</b></h2>
+    <dl class="description-list">
+        <dt>Fuel Type</dt>
+        <dd>{{ car.Fuel_Type }}</dd>
+
+        <dt>Gear Spec</dt>
+        <dd>{{ car.Gear_Spec }}</dd>
+
+        {% if car.Fuel_Type == 'Electric' %}
+            <dt>Level 2 Charging (hrs)</dt><dd>{{ car.Level2_Charging }}</dd>
+            <dt>DC Fast Charging (mins)</dt><dd>{{ car.Dc_Fast_Charging }}</dd>
+            <dt>Battery Capacity (mAh)</dt><dd>{{ car.Battery_Capacity }}</dd>
+            <dt>Expected Range</dt><dd>{{ car.Expected_Range }}</dd>
+            <dt>MPGe City</dt><dd>{{ car.Km_L_e_City }}</dd>
+            <dt>MPGe Highway</dt><dd>{{ car.Km_L_e_Hwy }}</dd>
+        {% else %}
+            <dt>Engine Size (L)</dt><dd>{{ car.Engine_Size }}</dd>
+            <dt>Cylinder Config</dt><dd>{{ car.Cylinder_Config }}</dd>
+            <dt>MPG</dt><dd>{{ car.Km_per_l }}</dd>
+            <dt>Valves</dt><dd>{{ car.Valves }}</dd>
+        {% endif %}
+    </dl>
+
+    <h2><b>Basics</b></h2>
+    <dl class="description-list">
+        <dt>Exterior Color</dt><dd>{{ car.Exterior_Color }}</dd>
+        <dt>Interior Color</dt><dd>{{ car.Interior_Color }}</dd>
+        <dt>Drivetrain</dt><dd>{{ car.Drivetrain }}</dd>
+        <dt>Engine</dt><dd>{{ car.Fuel_Type }}</dd>
+        <dt>Mileage</dt><dd>{{ car.Mileage }}</dd>
+    </dl>
+
+    <h2><b>Vehicle History</b></h2>
+    <dl class="description-list">
+        <dt>Accidents or Damage</dt><dd>{{ car.Accidents_Or_Damage }}</dd>
+        <dt>1 Owner Vehicle</dt><dd>{{ car.One_Owner_Vehicle }}</dd>
+        <dt>Personal Use Only</dt><dd>{{ car.Personal_Use_Only }}</dd>
+        <dt>Clean Title</dt><dd>{{ car.Clean_Title }}</dd>
+    </dl>
+
+    <h2><b>Seller's Info</b></h2>
+    <div class="seller-info">
+        <p><b>{{ car.Seller_Name }}</b></p>
+        <p>{{ car.Street_Address }}, {{ car.City }}, {{ car.STATE }} {{ car.ZIP }}</p>
+        <p><b><a href="{{ car.Seller_Site }}" target="_blank">View this car on Seller Site</a></b></p>
+    </div>
+
+</div>
+{% endblock %}

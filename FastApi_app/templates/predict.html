@@ -1,0 +1,289 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="prediction-form-container">
+  <h2>Car Price Prediction</h2>
+  <div class="category-buttons">
+    <a href="/predict/Non-Electric" class="{% if cat != 'Electric'%}active{% endif %}">Non-Electric</a>
+    <a href="/predict/Electric" class="{% if cat == 'Electric'%}active{% endif %}">Electric</a>
+  </div>
+
+  <form action="/prediction" method="post" class="prediction-form">
+
+    <!-- BASIC INFO -->
+    <h3>Basic Information</h3>
+    <div class="form-grid">
+      <label>Model Year*</label>
+      <input type="number" name="Model_Year" required>
+
+      <label>Mileage*</label>
+      <input type="number" name="Mileage" required>
+
+      <label>Brand Name*</label>
+      <select name="Brand_Name" required>
+        <option disabled selected>--Select Brand--</option>
+        <option>Ford</option>
+        <option>Chevrolet</option>
+        <option>Mazda</option>
+        <option>Tesla</option>
+        <option>Dodge</option>
+        <option>Jeep</option>
+        <option>Toyota</option>
+        <option>BMW</option>
+        <option>Honda</option>
+        <option>Audi</option>
+        <option>Subaru</option>
+        <option>GMC</option>
+        <option>Nissan</option>
+        <option>Porsche</option>
+        <option>Volvo</option>
+        <option>Chrysler</option>
+        <option>Mercedes-Benz</option>
+        <option>Acura</option>
+        <option>Kia</option>
+        <option>RAM</option>
+        <option>Lexus</option>
+        <option>Volkswagen</option>
+        <option>Scion</option>
+        <option>MINI</option>
+      </select>
+
+      <label>Model Name*</label>
+      <select name="Model_Name" required>
+        <option disabled selected>--Select Model--</option>
+        <option>F-150</option>
+        <option>Model 3</option>
+        <option>Camry</option>
+        <option>X5</option>
+        <option>A4</option>
+      </select>
+
+      <label>Stock Type*</label>
+      <select name="Stock_Type" required>
+        <option>New</option>
+        <option>Used</option>
+        <option>Certified</option>
+      </select>
+
+      <label>Exterior Color*</label>
+      <select name="Exterior_Color" required>
+        <option>gray</option>
+        <option>black</option>
+        <option>white</option>
+        <option>blue</option>
+        <option>silver</option>
+        <option>red</option>
+        <option>yellow</option>
+        <option>green</option>
+        <option>brown</option>
+        <option>biege</option>
+        <option>orange</option>
+        <option>purple</option>
+        <option>pink</option>
+      </select>
+
+      <label>Interior Color*</label>
+      <select name="Interior_Color" required>
+        <option>gray</option>
+        <option>black</option>
+        <option>white</option>
+        <option>blue</option>
+        <option>silver</option>
+        <option>red</option>
+        <option>yellow</option>
+        <option>green</option>
+        <option>brown</option>
+        <option>biege</option>
+        <option>orange</option>
+        <option>purple</option>
+      </select>
+
+      <label>Drivetrain*</label>
+      <select name="Drivetrain" required>
+        <option>AWD</option>
+        <option>RWD</option>
+        <option>FWD</option>
+        <option>4WD</option>
+      </select>
+    </div>
+
+    <!-- ELECTRIC OR NON-ELECTRIC -->
+    {% if cat == 'Electric' %}
+    <h3>Electric Specifications</h3>
+    <div class="form-grid">
+      <label>Fuel Type*</label>
+      <select name="Fuel_Type" required><option>Electric</option></select>
+
+      <label>Level 2 Charging (hrs)*</label>
+      <input type="number" step="0.1" name="Level2_Charging" required>
+
+      <label>DC Fast Charging (mins)*</label>
+      <input type="number" step="0.1" name="Dc_Fast_Charging" required>
+
+      <label>Battery Capacity (mAh)*</label>
+      <input type="number" step="0.1" name="Battery_Capacity" required>
+
+      <label>Expected Range (miles)*</label>
+      <input type="number" step="0.1" name="Expected_Range" required>
+
+      <label>MPGe City*</label>
+      <input type="number" step="0.1" name="Km_L_e_City" required>
+
+      <label>MPGe Highway*</label>
+      <input type="number" step="0.1" name="Km_L_e_Hwy" required>
+    </div>
+
+    {% else %}
+    <h3>Engine Specifications</h3>
+    <div class="form-grid">
+      <label>Fuel Type*</label>
+      <select name="Fuel_Type" required>
+        <option>Flex Fuel</option>
+        <option>Gasoline</option>
+        <option>Diesel</option>
+        <option>Hybrid</option>
+        <option>Plug-in Hybrid</option>
+        <option>CNG/LPG</option>
+      </select>
+
+      <label>Gear Spec*</label>
+      <select name="Gear_Spec" required>
+
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+      </select>
+
+      <label>Engine Size (litres)*</label>
+      <input type="number" step="0.1" name="Engine_Size" required>
+
+      <label>Cylinder Config*</label>
+      <select name="Cylinder_Config" required>
+        <option>V8</option>
+        <option>I4</option>
+        <option>V6</option>
+        <option>I6</option>
+        <option>H4</option>
+        <option>I5</option>
+        <option>I3</option>
+        <option>H6</option>
+        <option>V4</option>
+        <option>V2</option>
+        <option>V12</option>
+        <option>V10</option>
+      </select>
+
+      <label>Valves*</label>
+      <select name="Valves" required>
+        <option>8</option>
+        <option>12</option>
+        <option>16</option>
+        <option>18</option>
+        <option>20</option>
+        <option>24</option>
+        <option>30</option>
+        <option>32</option>
+        <option>48</option>
+      </select>
+
+      <label>Km/L*</label>
+      <input type="number" step="0.1" name="Km_per_l" required>
+    </div>
+    {% endif %}
+
+    <!-- OWNERSHIP & HISTORY -->
+    <h3>Ownership & History</h3>
+    <div class="form-grid">
+      <label>Accidents or Damage*</label>
+      <select name="Accidents_Or_Damage" required>
+        <option value="True">True</option><option value="False">False</option>
+      </select>
+
+      <label>Clean Title*</label>
+      <select name="Clean_Title" required>
+        <option value="True">True</option><option value="False">False</option>
+      </select>
+
+      <label>One Owner Vehicle*</label>
+      <select name="One_Owner_Vehicle" required>
+        <option value="True">True</option><option value="False">False</option>
+      </select>
+
+      <label>Personal Use Only*</label>
+      <select name="Personal_Use_Only" required>
+        <option value="True">True</option><option value="False">False</option>
+      </select>
+    </div>
+
+    <!-- LOCATION -->
+    <h3>Location</h3>
+    <div class="form-grid">
+      <label>City*</label>
+      <input type="text" name="City" required>
+
+      <label>State*</label>
+      <select name="STATE" required>
+        <option>alabama</option>
+        <option>alaska</option>
+        <option>arizona</option>
+        <option>arkansas</option>
+        <option>california</option>
+        <option>colorado</option>
+        <option>connecticut</option>
+        <option>delaware</option>
+        <option>florida</option>
+        <option>georgia</option>
+        <option>hawaii</option>
+        <option>idaho</option>
+        <option>illinois</option>
+        <option>maine</option>
+        <option>maryland</option>
+        <option>massachusetts</option>
+        <option>michigan</option>
+        <option>minnesota</option>
+        <option>mississippi</option>
+        <option>missouri</option>
+        <option>montana</option>
+        <option>nebraska</option>
+        <option>nevada</option>
+        <option>new hampshire</option>
+        <option>new jersey</option>
+        <option>new mexico</option>
+        <option>new york</option>
+        <option>north carolina</option>
+        <option>north dakota</option>
+        <option>ohio</option>
+        <option>oklahoma</option>
+        <option>oregon</option>
+        <option>pennsylvania</option>
+        <option>rhode island</option>
+        <option>south carolina</option>
+        <option>south dakota</option>
+        <option>tennessee</option>
+        <option>texas</option>
+        <option>utah</option>
+        <option>vermont</option>
+        <option>virginia</option>
+        <option>washington</option>
+        <option>west virginia</option>
+        <option>wisconsin</option>
+        <option>wyoming</option>
+      </select>
+    </div>
+
+    <button type="submit" class="predict-btn">Predict Price</button>
+  </form>
+
+  {% if price %}
+    <h2><b>Predicted Price is : price</b></h2>
+  {% endif %}
+</div>
+
+{% endblock %}

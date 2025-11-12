@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h2 class="title">Popular categories</h2>
+
+  <div class="category-buttons">
+    {% for cat in ['electric', 'suv','pickup truck', 'sedan', 'luxury', 'crossover', 'hybrid', 'diesel', 'coupe', 'hatchback', 'wagon', 'convertible', 'minivan', 'plug-in hybrid'] %}
+      <a href="/category/{{ cat }}" class="{% if cat == active_category %}active{% endif %}">
+        {{ cat.capitalize() }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <div class="cards">
+    {% for car in cars %}
+      <div class="card">
+        <img src="{{ car.img }}" alt="{{ car.name }}">
+        <h3>{{ car.name }}</h3>
+        <p><a href="/cars/{{ car.name.split(' ')[0] }}/{{ ' '.join(car.name.split(' ')[1:]) }}">Shop now</a></p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="prediction-section">
+    <div class="prediction-content">
+      <h2>Want to sell your car?</h2>
+      <p>Use our intelligent system powered by machine learning to find the perfect market price of car for you.</p>
+    </div>
+    <div class="prediction-action">
+      <a href="/predict/Electric" class="predict-btn">Go to Prediction</a>
+    </div>
+  </div>
+{% endblock %}

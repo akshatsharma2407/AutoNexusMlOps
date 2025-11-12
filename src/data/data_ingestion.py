@@ -28,7 +28,7 @@ def load_data(file_path: str) -> pd.DataFrame:
     try:
         train = pd.read_csv(
             'https://raw.githubusercontent.com/akshatsharma2407/cars_ml_test/refs/heads/master/sample_all_cols.csv'
-        ).dropna()
+        ).dropna().drop(columns='Unnamed: 0')
         logger.info("train df fetched")
         return train
     except FileNotFoundError:
@@ -46,7 +46,7 @@ def load_data(file_path: str) -> pd.DataFrame:
 def save_data(folder_path: str, train: pd.DataFrame) -> None:
     try:
         os.makedirs(folder_path, exist_ok=True)
-        train.to_parquet(os.path.join(folder_path, "train.parquet"))
+        train.to_parquet(os.path.join(folder_path, "train.parquet"), index=False)
         logger.info("data saved in local")
     except ModuleNotFoundError:
         logger.error(

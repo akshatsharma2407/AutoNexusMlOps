@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field, field_validator, computed_field, StrictInt, EmailStr, Json
+from fastapi import Form
 from typing import Annotated, Optional, Literal
 from typing import List, Optional
 from datetime import datetime
@@ -124,6 +125,63 @@ class PredictionInputSchema(BaseModel):
     Km_L_e_Hwy: Annotated[float, Field(default=None, description='Km/L equivelent in electric cars (for Highway), give 0 in case of non-electric', examples=[50, 80])]   
     City: Annotated[str, Field(default=None, description='location of dealer/owner')]
     STATE: Annotated[str, Field(default=None, description='name of US states', examples=['Alaska', 'California', 'Texas'])]
+
+    @classmethod
+    def as_form(
+        cls,
+        Model_Year: int = Form(...),
+        Mileage: int = Form(...),
+        Brand_Name: str = Form(...),
+        Model_Name: str = Form(...),
+        Stock_Type: str = Form(...),
+        Exterior_Color: str = Form(...),
+        Interior_Color: str = Form(...),
+        Drivetrain: str = Form(...),
+        Fuel_Type: str = Form(...),
+        Accidents_Or_Damage: bool = Form(...),
+        Clean_Title: bool = Form(...),
+        One_Owner_Vehicle: bool = Form(...),
+        Personal_Use_Only: bool = Form(...),
+        Engine_Size: float = Form(0),
+        Km_per_l: float = Form(0),
+        Cylinder_Config: str = Form(0),
+        Valves: int = Form(0),
+        Level2_Charging: float = Form(0),
+        Dc_Fast_Charging: float = Form(0),
+        Battery_Capacity: float = Form(0),
+        Expected_Range: float = Form(0),
+        Km_L_e_City: float = Form(0),
+        Km_L_e_Hwy: float = Form(0),
+        City: str = Form(...),
+        STATE: str = Form(...),
+    ):
+        return cls(
+            Model_Year=Model_Year,
+            Mileage=Mileage,
+            Brand_Name=Brand_Name,
+            Model_Name=Model_Name,
+            Stock_Type=Stock_Type,
+            Exterior_Color=Exterior_Color,
+            Interior_Color=Interior_Color,
+            Drivetrain=Drivetrain,
+            Fuel_Type=Fuel_Type,
+            Accidents_Or_Damage=Accidents_Or_Damage,
+            Clean_Title=Clean_Title,
+            One_Owner_Vehicle=One_Owner_Vehicle,
+            Personal_Use_Only=Personal_Use_Only,
+            Engine_Size=Engine_Size,
+            Km_per_l=Km_per_l,
+            Cylinder_Config=Cylinder_Config,
+            Valves=Valves,
+            Level2_Charging=Level2_Charging,
+            Dc_Fast_Charging=Dc_Fast_Charging,
+            Battery_Capacity=Battery_Capacity,
+            Expected_Range=Expected_Range,
+            Km_L_e_City=Km_L_e_City,
+            Km_L_e_Hwy=Km_L_e_Hwy,
+            City=City,
+            STATE=STATE,
+        )
 
 class PredictionOutputSchema(BaseModel):
     Price: Annotated[float, Field(..., description='Price of model predicted by ML algo')]
