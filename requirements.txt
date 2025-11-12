@@ -2,6 +2,7 @@ isort
 black
 mysql-connector-python
 mysql
+authlib
 pydantic[email]
 passlib
 feature_engine~=1.9.3
