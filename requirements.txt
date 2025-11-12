@@ -2,6 +2,7 @@ isort
 black
 mysql-connector-python
 mysql
+pydantic[email]
 feature_engine~=1.9.3
 alembic~=1.17.0
 amqp~=5.3.1
