@@ -1,31 +1,37 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <h2 class="title">Results for "{{ model | title }}"</h2>
+<h2 class="title">Results for "{{ brand_name ~ ' ' ~ model_name }}"</h2>
 
-  {% if cars|length == 0 %}
-    <p>No cars found for "{{ model }}".</p>
-  {% else %}
-    <div class="listings">
-      {% for car in cars %}
-        <div class="listing-row">
-          <div class="listing-image">
-            <img src="{{ car.Image_List[0] }}" alt="{{ car.Model_Name }}">
-          </div>
-          <div class="listing-info">
-            <h5>{{ car.Stock_Type }}</h5>
-            <h3>{{ car.Model_Year ~ ' ' ~ car.Brand_Name + ' ' + car.Model_Name }}</h3>
-            <p>${{ car.Price }}</p>
-            <h6>{{ car.Mileage }}mi.</h6>
-            <p>{{ car.Seller_Name }}</p>
-            <p>{{ car.City.title() + ', ' + car.STATE.title() }}</p>
-            <br>
-            <p>
-              <a href="/cars/{{ car.id }}" class="details-link">View details</a>
-            </p>
-          </div>
+{% if cars|length == 0 %}
+  <p>No cars found for "{{ model_name }}".</p>
+{% else %}
+  <div class="listings">
+    {% for car in cars %}
+      <div class="listing-row">
+        <div class="listing-image">
+          <img src="{{ car.Image_List[0] }}" alt="{{ car.Model_Name }}">
         </div>
-      {% endfor %}
+        <div class="listing-info">
+          <h5>{{ car.Stock_Type }}</h5>
+          <h3>{{ car.Model_Year ~ ' ' ~ car.Brand_Name + ' ' + car.Model_Name }}</h3>
+          <p>${{ car.Price }}</p>
+          <h6>{{ car.Mileage }} mi</h6>
+          <p>{{ car.Seller_Name }}</p>
+          <p>{{ car.City.title() + ', ' + car.STATE.title() }}</p>
+          <p><a href="/cars/{{ car.id }}" class="details-link">View details</a></p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- pagination area (inside else, after listings) -->
+  <div class="pagination-wrapper">
+    <div class="pagination-container">
+      {% if next_page %}
+        <a href="/cars/{{ brand_name }}/{{ model_name }}?page={{ next_page }}&limit={{ limit }}" class="page-btn next-page-btn">Next →</a>
+      {% endif %}
     </div>
-  {% endif %}
+  </div>
+{% endif %}
 {% endblock %}

@@ -102,7 +102,7 @@ class PredictionInputSchema(BaseModel):
                                        Field(default=None, description='Interior color of Car, if not give the closest one', examples=['gray','silver','blue'])]
     Drivetrain: Annotated[Literal['AWD', '4WD', 'FWD', 'RWD'],
                                        Field(default=None, description='Drive Train of the car', examples=['AWD', '4WD', 'FWD', 'RWD'])]
-    Km_per_l: Annotated[int, Field(default=None, description='The present fuel economy of car (km/L)')]
+    Km_per_l: Annotated[float, Field(default=None, description='The present fuel economy of car (km/L)')]
     Fuel_Type: Annotated[Literal['Electric', 'Flex Fuel',  'Gasoline', 'Hybrid',
                                        'Diesel', 'Plug-in Hybrid', 'CNG/LPG', 'Other'],
                                         Field(default=None, description='Fuel Type of Car', examples=['Electric','Gasoline'])]
@@ -126,6 +126,21 @@ class PredictionInputSchema(BaseModel):
     City: Annotated[str, Field(default=None, description='location of dealer/owner')]
     STATE: Annotated[str, Field(default=None, description='name of US states', examples=['Alaska', 'California', 'Texas'])]
 
+    @field_validator("Model_Name", "City")
+    @classmethod
+    def name_correction(cls, name : str):
+        return name.strip().replace('  ', ' ').lower()
+    
+    @field_validator("Model_Year")
+    @classmethod
+    def year_validator(cls, year : int):
+        return year if year > 2000 else (year//10)*10
+    
+    @field_validator("Interior_Color", "Exterior_Color", "STATE")
+    @classmethod
+    def cap_color(cls, color: str):
+        return color.lower()
+
     @classmethod
     def as_form(
         cls,
@@ -144,8 +159,9 @@ class PredictionInputSchema(BaseModel):
         Personal_Use_Only: bool = Form(...),
         Engine_Size: float = Form(0),
         Km_per_l: float = Form(0),
-        Cylinder_Config: str = Form(0),
+        Cylinder_Config: str = Form('NA'),
         Valves: int = Form(0),
+        Gear_Spec : int =Form(0),
         Level2_Charging: float = Form(0),
         Dc_Fast_Charging: float = Form(0),
         Battery_Capacity: float = Form(0),
@@ -171,6 +187,7 @@ class PredictionInputSchema(BaseModel):
             Personal_Use_Only=Personal_Use_Only,
             Engine_Size=Engine_Size,
             Km_per_l=Km_per_l,
+            Gear_Spec=Gear_Spec,
             Cylinder_Config=Cylinder_Config,
             Valves=Valves,
             Level2_Charging=Level2_Charging,

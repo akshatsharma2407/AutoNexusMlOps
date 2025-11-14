@@ -11,6 +11,8 @@ from FastApi_app.prediction import prediction
 from FastApi_app.load_model import load_model
 from FastApi_app.auth import verify_password, create_access_token, verify_token
 from FastApi_app.home_data import CARS
+from FastApi_app.recommend import recommend_car_idx
+import json
 
 Base.metadata.create_all(bind=engine)
 
@@ -44,7 +46,7 @@ def home(request: Request):
     )
 
 @app.get('/category/{cat_name}', response_class=HTMLResponse)
-def category_page(request: Request, cat_name: str):
+def category_page(request: Request, cat_name: str = Path(..., description='Category of the car', examples=['SUV', 'Electric'])):
     cars = CARS.get(cat_name.lower())
     return templates.TemplateResponse(
         "home.html",
@@ -78,7 +80,7 @@ def get_cars(request: Request,
              brand_name: str = Path(..., description='name of brand'),
              model_name: str = Path(..., description='model name'),
              page: int = Query(default=1, ge=1, description='Page Number'),
-             limit: int = Query(default=20, le=100, description='Number of records per page'),
+             limit: int = Query(default=20, le=50, description='Number of records per page'),
              sortby: str = Query('id', description='name of col on which you want to sort'),
              orderby: str = Query('asc', description='order by, either "asc" or "desc"'),
              db: Session = Depends(get_db)):
@@ -91,7 +93,10 @@ def get_cars(request: Request,
             "models_list.html",
             {
                 "request" : request,
-                "model" : brand_name + ' ' + model_name,
+                "next_page" : page + 1,
+                'limit' : limit,
+                "brand_name" : brand_name,
+                "model_name" : model_name,
                 "cars" : cars
             }
         )
@@ -99,13 +104,17 @@ def get_cars(request: Request,
 @app.get('/cars/{id}', response_class= HTMLResponse)
 def get_car(request: Request, id: int = Path(..., description='id of car you want to fetch', examples=[1,2,3]), db: Session = Depends(get_db)):
     car = crud.get_car(db=db, id=id)
+    idx = recommend_car_idx(car)
+    recommended_cars = crud.recommmended_car_details(car_ids=idx, db=db)
+
     if car is None:
         raise HTTPException(status_code=404, detail='Car not found')
     return templates.TemplateResponse(
         "car_details.html",
         {
             'request' : request,
-            'car' : car
+            'car' : car,
+            'recommended_cars' : recommended_cars
         }
     )
 
@@ -140,11 +149,12 @@ def prediction_page(request: Request, cat: str = 'Electric'):
 @app.post('/prediction', response_model=schemas.PredictionOutputSchema)
 def predict_price(request: Request, car_details: schemas.PredictionInputSchema = Depends(schemas.PredictionInputSchema.as_form)):
     model = load_model()
+    print(car_details)
     price = prediction(car=car_details, model=model)
     return templates.TemplateResponse(
         "predict.html",
         {
             "request" : request,
-            "price" : price
+            "price" : round(price[0],2)
         }
     )

@@ -10,7 +10,6 @@
 
   <form action="/prediction" method="post" class="prediction-form">
 
-    <!-- BASIC INFO -->
     <h3>Basic Information</h3>
     <div class="form-grid">
       <label>Model Year*</label>
@@ -49,53 +48,45 @@
       </select>
 
       <label>Model Name*</label>
-      <select name="Model_Name" required>
-        <option disabled selected>--Select Model--</option>
-        <option>F-150</option>
-        <option>Model 3</option>
-        <option>Camry</option>
-        <option>X5</option>
-        <option>A4</option>
-      </select>
+      <input type="text" name="Model_Name" required>
 
       <label>Stock Type*</label>
       <select name="Stock_Type" required>
-        <option>New</option>
         <option>Used</option>
         <option>Certified</option>
       </select>
 
       <label>Exterior Color*</label>
       <select name="Exterior_Color" required>
-        <option>gray</option>
-        <option>black</option>
-        <option>white</option>
-        <option>blue</option>
-        <option>silver</option>
-        <option>red</option>
-        <option>yellow</option>
-        <option>green</option>
-        <option>brown</option>
-        <option>biege</option>
-        <option>orange</option>
-        <option>purple</option>
-        <option>pink</option>
+        <option>Gray</option>
+        <option>Black</option>
+        <option>White</option>
+        <option>Blue</option>
+        <option>Silver</option>
+        <option>Red</option>
+        <option>Yellow</option>
+        <option>Green</option>
+        <option>Brown</option>
+        <option>Biege</option>
+        <option>Orange</option>
+        <option>Purple</option>
+        <option>Pink</option>
       </select>
 
       <label>Interior Color*</label>
       <select name="Interior_Color" required>
-        <option>gray</option>
-        <option>black</option>
-        <option>white</option>
-        <option>blue</option>
-        <option>silver</option>
-        <option>red</option>
-        <option>yellow</option>
-        <option>green</option>
-        <option>brown</option>
-        <option>biege</option>
-        <option>orange</option>
-        <option>purple</option>
+        <option>Gray</option>
+        <option>Black</option>
+        <option>White</option>
+        <option>Blue</option>
+        <option>Silver</option>
+        <option>Red</option>
+        <option>Yellow</option>
+        <option>Green</option>
+        <option>Brown</option>
+        <option>Biege</option>
+        <option>Orange</option>
+        <option>Purple</option>
       </select>
 
       <label>Drivetrain*</label>
@@ -107,7 +98,6 @@
       </select>
     </div>
 
-    <!-- ELECTRIC OR NON-ELECTRIC -->
     {% if cat == 'Electric' %}
     <h3>Electric Specifications</h3>
     <div class="form-grid">
@@ -230,51 +220,51 @@
 
       <label>State*</label>
       <select name="STATE" required>
-        <option>alabama</option>
-        <option>alaska</option>
-        <option>arizona</option>
-        <option>arkansas</option>
-        <option>california</option>
-        <option>colorado</option>
-        <option>connecticut</option>
-        <option>delaware</option>
-        <option>florida</option>
-        <option>georgia</option>
-        <option>hawaii</option>
-        <option>idaho</option>
-        <option>illinois</option>
-        <option>maine</option>
-        <option>maryland</option>
-        <option>massachusetts</option>
-        <option>michigan</option>
-        <option>minnesota</option>
-        <option>mississippi</option>
-        <option>missouri</option>
-        <option>montana</option>
-        <option>nebraska</option>
-        <option>nevada</option>
-        <option>new hampshire</option>
-        <option>new jersey</option>
-        <option>new mexico</option>
-        <option>new york</option>
-        <option>north carolina</option>
-        <option>north dakota</option>
-        <option>ohio</option>
-        <option>oklahoma</option>
-        <option>oregon</option>
-        <option>pennsylvania</option>
-        <option>rhode island</option>
-        <option>south carolina</option>
-        <option>south dakota</option>
-        <option>tennessee</option>
-        <option>texas</option>
-        <option>utah</option>
-        <option>vermont</option>
-        <option>virginia</option>
-        <option>washington</option>
-        <option>west virginia</option>
-        <option>wisconsin</option>
-        <option>wyoming</option>
+        <option>Alabama</option>
+        <option>Alaska</option>
+        <option>Arizona</option>
+        <option>Arkansas</option>
+        <option>California</option>
+        <option>Colorado</option>
+        <option>Connecticut</option>
+        <option>Delaware</option>
+        <option>Florida</option>
+        <option>Georgia</option>
+        <option>Hawaii</option>
+        <option>Idaho</option>
+        <option>Illinois</option>
+        <option>Maine</option>
+        <option>Maryland</option>
+        <option>Massachusetts</option>
+        <option>Michigan</option>
+        <option>Minnesota</option>
+        <option>Mississippi</option>
+        <option>Missouri</option>
+        <option>Montana</option>
+        <option>Nebraska</option>
+        <option>Nevada</option>
+        <option>New Hampshire</option>
+        <option>New Jersey</option>
+        <option>New Mexico</option>
+        <option>New York</option>
+        <option>North Carolina</option>
+        <option>North Dakota</option>
+        <option>Ohio</option>
+        <option>Oklahoma</option>
+        <option>Oregon</option>
+        <option>Pennsylvania</option>
+        <option>Rhode Island</option>
+        <option>South Carolina</option>
+        <option>South Dakota</option>
+        <option>Tennessee</option>
+        <option>Texas</option>
+        <option>Utah</option>
+        <option>Vermont</option>
+        <option>Virginia</option>
+        <option>Washington</option>
+        <option>West Virginia</option>
+        <option>Wisconsin</option>
+        <option>Wyoming</option>
       </select>
     </div>
 
@@ -282,7 +272,7 @@
   </form>
 
   {% if price %}
-    <h2><b>Predicted Price is : price</b></h2>
+    <h2><b>Predicted Price is : {{ price }}</b></h2>
   {% endif %}
 </div>
 

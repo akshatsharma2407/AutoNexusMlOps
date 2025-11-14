@@ -68,6 +68,25 @@
         <p>{{ car.Street_Address }}, {{ car.City }}, {{ car.STATE }} {{ car.ZIP }}</p>
         <p><b><a href="{{ car.Seller_Site }}" target="_blank">View this car on Seller Site</a></b></p>
     </div>
-
 </div>
+
+    <h1><b>Similar Cars !</b></h1>
+  <div class="listings">
+    {% for car in recommended_cars %}
+      <div class="listing-row">
+        <div class="listing-image">
+          <img src="{{ car.Image_List[0] }}" alt="{{ car.Model_Name }}">
+        </div>
+        <div class="listing-info">
+          <h5>{{ car.Stock_Type }}</h5>
+          <h3>{{ car.Model_Year ~ ' ' ~ car.Brand_Name + ' ' + car.Model_Name }}</h3>
+          <p>${{ car.Price }}</p>
+          <h6>{{ car.Mileage }} mi</h6>
+          <p>{{ car.Seller_Name }}</p>
+          <p>{{ car.City.title() + ', ' + car.STATE.title() }}</p>
+          <p><a href="/cars/{{ car.id }}" class="details-link">View details</a></p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

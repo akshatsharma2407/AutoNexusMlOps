@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import asc, desc
 from FastApi_app import schemas, models
+from typing import List
 
 def get_cars(db: Session,brand_name: str, model_name: str,page : int, limit : int, sortby: str = "id", orderby: str = "asc"):
     sort_column = getattr(models.Car, sortby)
@@ -48,3 +49,7 @@ def delete_car(db: Session, id: int):
         db.delete(db_car)
         db.commit()
     return db_car
+
+def recommmended_car_details(db: Session, car_ids: List[int]):
+    results = db.query(models.Car).filter(models.Car.id.in_(car_ids)).all()
+    return results

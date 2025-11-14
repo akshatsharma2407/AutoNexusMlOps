@@ -35,7 +35,6 @@ class Car(Base):
     Clean_Title = Column(Boolean)
     One_Owner_Vehicle = Column(String(100))
     Personal_Use_Only = Column(String(100))
-    Open_Recall = Column(String(100))
     Level2_Charging = Column(DECIMAL(6, 2))
     Dc_Fast_Charging = Column(DECIMAL(6, 2))
     Battery_Capacity = Column(DECIMAL(6, 2))

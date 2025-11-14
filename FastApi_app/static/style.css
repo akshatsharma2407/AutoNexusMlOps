@@ -6,6 +6,36 @@ body {
   padding: 0;
 }
 
+/* ==== Global Header / Brand Bar ==== */
+.site-header {
+  width: 100%;
+  background-color: #111; /* black bar at top */
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* stays above page content */
+}
+
+/* Brand name link (AutoNexus) */
+.brand-link {
+  text-decoration: none;
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.brand-link:hover {
+  color: #00b4d8; /* subtle highlight on hover */
+}
+
+
 .container {
   max-width: 1200px;
   margin: 40px auto;
@@ -206,6 +236,54 @@ body {
 .details-link:hover {
   background: #005ac1;
 }
+
+/* ensure container full width and layout */
+.listings { margin-top: 20px; }
+
+/* wrapper ensures full-width area for pagination */
+.pagination-wrapper {
+  width: 100%;
+  display: block;
+  margin-top: 18px;
+}
+
+/* right aligned container */
+.pagination-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; /* important: pushes content to right */
+  gap: 10px;
+  padding-right: 8px;
+  box-sizing: border-box;
+}
+
+/* button base */
+.page-btn {
+  text-decoration: none;
+  background-color: #111;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 28px;
+  font-weight: 600;
+  transition: all .15s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* hover invert */
+.page-btn:hover {
+  background-color: #fff;
+  color: #111;
+  border: 1px solid #111;
+}
+
+/* optional: prev button style slightly muted */
+.prev-page-btn { opacity: 0.95; }
+
+/* debug helper — remove when done */
+.pagination-container.debug { border: 1px dashed rgba(255,0,0,0.4); }
 
 
 /* ==== Car Detail Page ==== */
