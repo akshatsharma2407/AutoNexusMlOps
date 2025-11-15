@@ -11,11 +11,11 @@ from pathlib import Path
 DB_USER = os.getenv('DB_USERNAME')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_HOSTNAME = os.getenv('DB_HOSTNAME')
-DB_PORT = os.getenv('DB_PORT')
+# DB_PORT = os.getenv('DB_PORT')
 DB_NAME = os.getenv('DB_NAME')
 
 
-SQLALCHEMY_DATABASE_URL = F"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOSTNAME}:{DB_PORT}/{DB_NAME}"
+SQLALCHEMY_DATABASE_URL = F"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOSTNAME}:3306/{DB_NAME}"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
