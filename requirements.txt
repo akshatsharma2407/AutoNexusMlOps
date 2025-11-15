@@ -2,6 +2,7 @@ isort
 black
 pymysql
 mysql-connector-python
+python-multipart
 mysql
 authlib
 pydantic[email]
