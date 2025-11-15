@@ -3,6 +3,8 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from FastApi_app.load_recommendation_artifacts import load_artifacts
 
+df, transformer = None, None
+
 def recommend_car_idx(input_car, k=5):
     input_car = pd.DataFrame(data=[{
         'Brand_Name' : input_car.Brand_Name,
@@ -30,7 +32,9 @@ def recommend_car_idx(input_car, k=5):
         'Accidents_Or_Damage' : input_car.Accidents_Or_Damage,
         'Clean_Title' : input_car.Clean_Title
     }])
-    df, transformer = load_artifacts()
+    global df, transformer
+    if (df == None) & (transformer == None):
+        df, transformer = load_artifacts()
     similarity_matrix = cosine_similarity(transformer.transform(input_car), df)
     idx = np.argsort(similarity_matrix.ravel())[-k-1:][::-1][1:]
-    return [int(id_) for id_ in idx] #convert np.int to int
+    return [int(id_) for id_ in idx] # convert np.int to int

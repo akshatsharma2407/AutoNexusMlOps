@@ -28,3 +28,4 @@ stages:
     deps:
     - reports/run_info.json
     - src/registry/register_model.py
+    

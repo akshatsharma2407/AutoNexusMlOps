@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, DECIMAL, func, JSON
-from sqlalchemy.orm import relationship
 from FastApi_app.database import Base
 
 class User(Base):
@@ -16,7 +15,7 @@ class User(Base):
 
 
 class Car(Base):
-    __tablename__ = "cars"
+    __tablename__ = "Car"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     Model_Year = Column(Integer, nullable=False)

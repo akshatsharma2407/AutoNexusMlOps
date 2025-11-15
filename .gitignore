@@ -10,6 +10,7 @@ reports/run_info.json
 
 # Distribution / packaging
 .Python
+/FastApi_app/recommendation_artifacts/
 env/
 build/
 develop-eggs/

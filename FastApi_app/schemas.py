@@ -54,32 +54,11 @@ class CarBase(BaseModel):
     lat: Annotated[Optional[float], Field(default=None, description='latitude of dealer location')]
     LONG: Annotated[Optional[float], Field(default=None, description='Longitude of dealer location')]
 
-    # @field_validator('name')
-    # @classmethod
-    # def name_title(cls, value) -> str:
-    #     return value.upper()
-    
-    # @computed_field
-    # @property
-    # def price_rs(cls) -> float:
-    #     return cls.price*87
-
 class CarCreate(CarBase):
     pass
 
 class CarUpdate(CarBase):
     pass
-    
-
-    # @field_validator('name')
-    # @classmethod
-    # def name_title(cls, value) -> str:
-    #     return value.upper() if value else value
-    
-    # @computed_field
-    # @property
-    # def price_rs(cls) -> float:
-    #     return cls.price*87 if cls.price else cls.price
 
 class CarOut(CarBase):
     id: Annotated[int, Field(..., description='id of Car')]
@@ -93,13 +72,13 @@ class PredictionInputSchema(BaseModel):
     Model_Name: Annotated[str, Field(default=None, description='Model of the Car', examples=['Model Y', 'Miata', 'Challenger'])]
     Stock_Type: Annotated[Literal['New', 'Used', 'Certified'], Field(default=None, description='Stock Type of Model', examples=['New', 'Used', 'Certified'])]
     Mileage: Annotated[int, Field(default=None, description='How many miles your car run till now?', examples=[2463,636356])]
-    Exterior_Color: Annotated[Literal['gray',  'black',  'white', 'yellow', 'silver',
-                                      'green',    'red',   'blue',  'brown',  'beige',
-                                      'orange', 'purple',  'pink', 'violet'],
-                                       Field(default=None, description='Color of Car from given fields, if not found give closest color', examples=['gray','silver','beige'])]
-    Interior_Color: Annotated[Literal['gray', 'black', 'yellow', 'red', 'beige', 'brown', 'silver',
-                                      'blue', 'white', 'green', 'orange','purple'],
-                                       Field(default=None, description='Interior color of Car, if not give the closest one', examples=['gray','silver','blue'])]
+    Exterior_Color: Annotated[Literal['Gray',  'Black',  'White', 'Yellow', 'Silver',
+                                      'Green',  'Red',   'Blue',  'Brown',  'Beige',
+                                      'Orange', 'Purple',  'Pink', 'Violet'],
+                                       Field(default=None, description='Color of Car from given fields, if not found give closest color', examples=['Gray','Silver','Beige'])]
+    Interior_Color: Annotated[Literal['Gray', 'Black', 'Yellow', 'Red', 'Beige', 'Brown', 'Silver',
+                                      'Blue', 'White', 'Green', 'Orange','Purple'],
+                                       Field(default=None, description='Interior color of Car, if not give the closest one', examples=['Gray','Silver','Blue'])]
     Drivetrain: Annotated[Literal['AWD', '4WD', 'FWD', 'RWD'],
                                        Field(default=None, description='Drive Train of the car', examples=['AWD', '4WD', 'FWD', 'RWD'])]
     Km_per_l: Annotated[float, Field(default=None, description='The present fuel economy of car (km/L)')]

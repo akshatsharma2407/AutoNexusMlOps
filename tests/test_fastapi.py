@@ -10,7 +10,6 @@ class FastAPITests(unittest.TestCase):
     
     def test_endpoints(cls):
         response = cls.client.post("/prediction", json={
-                                            "Unnamed: 0": 0,
                                             "Model_Year": 1990,
                                             "Mileage": 2463,
                                             "Brand_Name": "Audi",

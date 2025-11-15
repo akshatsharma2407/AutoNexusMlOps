@@ -2,10 +2,14 @@ from datetime import datetime, timedelta, timezone
 from authlib.jose import JoseError, jwt
 from fastapi import HTTPException
 from passlib.context import CryptContext
+import os
+from dotenv import load_dotenv
 
-SECRET_KEY = 'my_secret'
-ALGORITHM = 'HS256'
-ACCESS_TOKEN_EXPIRY_MINUTES = 30
+load_dotenv()
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+ALGORITHM = os.getenv('ALGORITHM')
+ACCESS_TOKEN_EXPIRY_MINUTES = os.getenv('ACCESS_TOKEN_EXPIRY_MINUTES')
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
