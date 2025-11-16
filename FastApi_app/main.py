@@ -1,4 +1,4 @@
-from FastApi_app import crud, schemas, user_service
+import crud, schemas, user_service
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, HTTPException, Depends, Path, Query, Request
 from fastapi.templating import Jinja2Templates
@@ -6,22 +6,24 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from typing import List
-from FastApi_app.database import SessionLocal, Base, engine
-from FastApi_app.prediction import prediction
-from FastApi_app.load_model import load_model
-from FastApi_app.auth import verify_password, create_access_token, verify_token
-from FastApi_app.home_data import CARS
-from FastApi_app.recommend import recommend_car_idx
+from database import SessionLocal, Base, engine
+from prediction import prediction
+from load_model import load_model
+from auth import verify_password, create_access_token, verify_token
+from recommend import recommend_car_idx
 import json
+import requests
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
-app.mount("/static", StaticFiles(directory="FastApi_app/static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-templates = Jinja2Templates(directory="FastApi_app/templates")
+templates = Jinja2Templates(directory="templates")
+
+cars = requests.get('https://raw.githubusercontent.com/akshatsharma2407/Car-Data-API/refs/heads/master/cars.json').json()
 
 model = None
 
@@ -35,25 +37,25 @@ def get_db():
 @app.get('/', response_class=HTMLResponse)
 def home(request: Request):
     category = "electric"
-    cars = CARS.get(category)
+    home_cars = cars.get(category)
     return templates.TemplateResponse(
         "home.html",
         {
             "request" : request,
             'active_category' : category,
-            "cars" : cars
+            "cars" : home_cars
         }
     )
 
 @app.get('/category/{cat_name}', response_class=HTMLResponse)
 def category_page(request: Request, cat_name: str = Path(..., description='Category of the car', examples=['SUV', 'Electric'])):
-    cars = CARS.get(cat_name.lower())
+    home_cars = cars.get(cat_name)
     return templates.TemplateResponse(
         "home.html",
         {
             "request" : request,
             "active_category" : cat_name.lower(),
-            "cars" : cars
+            "cars" : home_cars
         }
     )
 

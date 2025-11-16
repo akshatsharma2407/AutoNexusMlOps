@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, DECIMAL, func, JSON
-from FastApi_app.database import Base
+from database import Base
 
 class User(Base):
     __tablename__ = "users"

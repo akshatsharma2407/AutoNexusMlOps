@@ -5,13 +5,13 @@ from dotenv import load_dotenv
 import os
 from pathlib import Path
 
-env_path = Path(__file__).resolve().parent / ".env" # through ChatGPT
+env_path = Path(__file__).resolve().parent / ".env" # through ChatGPT, for local runs only
 load_dotenv(env_path)
 
 DB_USER = os.getenv('DB_USERNAME')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_HOSTNAME = os.getenv('DB_HOSTNAME')
-# DB_PORT = os.getenv('DB_PORT') 
+# DB_PORT = os.getenv('DB_PORT')
 DB_NAME = os.getenv('DB_NAME')
 
 

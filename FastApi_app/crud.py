@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import asc, desc
-from FastApi_app import schemas, models
+import schemas, models
 from typing import List
 
 def get_cars(db: Session,brand_name: str, model_name: str,page : int, limit : int, sortby: str = "id", orderby: str = "asc"):

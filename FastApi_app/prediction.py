@@ -1,4 +1,4 @@
-from FastApi_app import schemas
+import schemas
 import pandas as pd
 from sklearn.pipeline import Pipeline
 

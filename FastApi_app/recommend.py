@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from FastApi_app.load_recommendation_artifacts import load_artifacts
+from load_recommendation_artifacts import load_artifacts
 
 df, transformer = None, None
 

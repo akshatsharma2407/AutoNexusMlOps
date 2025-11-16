@@ -105,10 +105,15 @@ class PredictionInputSchema(BaseModel):
     City: Annotated[str, Field(default=None, description='location of dealer/owner')]
     STATE: Annotated[str, Field(default=None, description='name of US states', examples=['Alaska', 'California', 'Texas'])]
 
-    @field_validator("Model_Name", "City")
+    @field_validator("City")
     @classmethod
     def name_correction(cls, name : str):
         return name.strip().replace('  ', ' ').lower()
+    
+    @field_validator("Model_Name")
+    @classmethod
+    def name_correction(cls, name : str):
+        return name.strip().replace('  ', ' ')
     
     @field_validator("Model_Year")
     @classmethod
