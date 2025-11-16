@@ -9,14 +9,14 @@ class FastAPITests(unittest.TestCase):
         cls.client = TestClient(app)
     
     def test_endpoints(cls):
-        response = cls.client.post("/prediction", json={
+        response = cls.client.post("/prediction", data={
                                             "Model_Year": 1990,
                                             "Mileage": 2463,
                                             "Brand_Name": "Audi",
                                             "Model_Name": "Model Y",
                                             "Stock_Type": "New",
-                                            "Exterior_Color": "gray",
-                                            "Interior_Color": "gray",
+                                            "Exterior_Color": "Gray",
+                                            "Interior_Color": "Gray",
                                             "Drivetrain": "AWD",
                                             "Km/L": 0,
                                             "Fuel_Type": "Electric",
@@ -37,7 +37,11 @@ class FastAPITests(unittest.TestCase):
                                             "City": "string",
                                             "STATE": "Alaska"
                                             })
+        if response.status_code != 200:
+            print(response.json())
+
         cls.assertEqual(response.status_code, 200)
+
 
 if __name__ == "__main__":
     unittest.main()

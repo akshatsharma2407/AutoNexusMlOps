@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 import os
 from pathlib import Path
 
-# env_path = Path(__file__).resolve().parent / ".env" # through ChatGPT
-# load_dotenv(env_path)
+env_path = Path(__file__).resolve().parent / ".env" # through ChatGPT
+load_dotenv(env_path)
 
 DB_USER = os.getenv('DB_USERNAME')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
