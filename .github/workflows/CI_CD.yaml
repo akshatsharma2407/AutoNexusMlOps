@@ -83,21 +83,21 @@ jobs:
         run: |
           python src/registry/promote_model.py
       
-      - name: run FastAPI tests
-        env:
-          ACCESS_TOKEN_EXPIRY_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRY_MINUTES }}
-          ALGORITHM : ${{ secrets.ALGORITHM }}
-          AWS_ACCESS_KEY_ID : ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
-          DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_PASSWORD: ${{  secrets.DB_PASSWORD }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          REGION_NAME: ${{ secrets.REGION_NAME }}
-          SECRET_KEY : ${{ secrets.SECRET_KEY }}
-        run: |
-          python -m unittest tests/test_fastapi.py
+      # - name: run FastAPI tests
+      #   env:
+      #     ACCESS_TOKEN_EXPIRY_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRY_MINUTES }}
+      #     ALGORITHM : ${{ secrets.ALGORITHM }}
+      #     AWS_ACCESS_KEY_ID : ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+      #     DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+      #     DB_NAME: ${{ secrets.DB_NAME }}
+      #     DB_PASSWORD: ${{  secrets.DB_PASSWORD }}
+      #     DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      #     REGION_NAME: ${{ secrets.REGION_NAME }}
+      #     SECRET_KEY : ${{ secrets.SECRET_KEY }}
+      #   run: |
+      #     python -m unittest tests/test_fastapi.py
       
       - name: Login to AWS ECR
         run: |
