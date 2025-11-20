@@ -121,22 +121,31 @@ def get_car(request: Request, id: int = Path(..., description='id of car you wan
     )
 
 @app.post('/cars', response_model=schemas.CarOut)
-def create_car(car: schemas.CarCreate, db: Session = Depends(get_db)):
-    return crud.create_car(db=db, new_car=car)
+def create_car(car: schemas.CarCreate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    if verify_token(token):
+        return crud.create_car(db=db, new_car=car)
+    else:
+        raise HTTPException(status_code=401, detail='Unauthorized access or time out')
 
 @app.put('/cars/{id}')
-def update_car(car: schemas.CarUpdate, id: int = Path(..., description=('unique id of car')), db: Session = Depends(get_db)):
-    db_car = crud.update_car(db=db, id=id, update_car=car)
-    if db_car is None:
-        raise HTTPException(status_code=404, detail='Car not found')
-    return db_car
+def update_car(car: schemas.CarUpdate, id: int = Path(..., description=('unique id of car')), db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    if verify_token(token):
+        db_car = crud.update_car(db=db, id=id, update_car=car)
+        if db_car is None:
+            raise HTTPException(status_code=404, detail='Car not found')
+        return db_car
+    else:
+        raise HTTPException(status_code=401, detail='Unauthorized access or time out')
 
 @app.delete('/cars/{id}')
-def delete_car(id: int = Path(..., description='unique id of car you want to update'), db: Session = Depends(get_db)):
-    db_car = crud.delete_car(db=db, id=id)
-    if db_car is None:
-        raise HTTPException(status_code=404, detail='Car not found')
-    return JSONResponse(status_code=200, content='Car Deleted Succesfully')
+def delete_car(id: int = Path(..., description='unique id of car you want to update'), db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    if verify_token(token):
+        db_car = crud.delete_car(db=db, id=id)
+        if db_car is None:
+            raise HTTPException(status_code=404, detail='Car not found')
+        return JSONResponse(status_code=200, content='Car Deleted Succesfully')
+    else:
+        return HTTPException(status_code=401, detail='Unauthorized access or time out')
 
 @app.get('/predict/{cat}', response_class=HTMLResponse)
 def prediction_page(request: Request, cat: str = 'Electric'):
