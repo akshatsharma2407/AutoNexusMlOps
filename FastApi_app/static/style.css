@@ -1,3 +1,8 @@
+/* Add this at the very top of your CSS file to fix width calculation issues */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   background-color: #ffffff;
@@ -6,33 +11,44 @@ body {
   padding: 0;
 }
 
-/* ==== Global Header / Brand Bar ==== */
 .site-header {
-  width: 100%;
-  background-color: #111; /* black bar at top */
-  color: white;
-  padding: 15px 30px;
+  /* Remove width: 100% (Block elements are 100% by default) */
+  /* width: 100%;  <-- REMOVE THIS LINE */
+  
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* stays above page content */
+  justify-content: space-between; 
+  padding: 1rem 2rem;
+  background: #0f172a;
 }
 
-/* Brand name link (AutoNexus) */
+/* Brand */
 .brand-link {
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: 800;
   text-decoration: none;
-  color: white;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  transition: color 0.2s ease;
 }
 
-.brand-link:hover {
-  color: #00b4d8; /* subtle highlight on hover */
+/* Right nav */
+.header-nav {
+  display: flex;
+  gap: 1.5rem;
+  
+  /* FORCE RIGHT ALIGNMENT: This acts like a magnet pulling nav to the right */
+  margin-left: auto; 
+}
+
+.header-nav .nav-link {
+  color: #ffffff !important; /* Added !important just in case Bootstrap/other CSS is overriding it */
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.header-nav .nav-link:hover {
+  color: #38bdf8 !important;
 }
 
 
@@ -532,4 +548,73 @@ body {
 
 .predict-btn:hover {
   background-color: #005ac1;
+}
+
+/* Blog grid container */
+section.features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 x 2 grid */
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+/* Individual cards */
+section.features > article {
+  background: white;              
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+section.features > article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgb(254, 253, 253);
+}
+
+/* Image styling */
+section.features .image {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+section.features .image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;       
+  background: #f8f8f8;      
+  border-radius: 8px;
+  padding: 6px;     
+}
+
+
+/* Title */
+section.features h3.major {
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin: 0 0 0.75rem;
+  color: #01070d;
+}
+
+section.features a.special:hover {
+  background: #38bdf8;
+  color: #020617;
+  transform: translateY(-1px);
+}
+
+ul.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  list-style: none;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  section.features {
+    grid-template-columns: 1fr;
+  }
 }
