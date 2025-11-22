@@ -31,6 +31,10 @@ def load_data(file_id: str) -> pd.DataFrame:
     try:
         url = f"https://drive.google.com/uc?id={file_id}"
         output = 'data/external/ml.parquet'
+        print('\n\n\n')
+        print('=============')
+        print(url)
+        print('=============')
         
         gdown.download(url, output, quiet=False)
 
