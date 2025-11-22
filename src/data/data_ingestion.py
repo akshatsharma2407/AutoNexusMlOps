@@ -3,6 +3,9 @@ import os
 
 import pandas as pd
 import yaml
+from sklearn.model_selection import train_test_split
+import os
+import gdown
 
 file_name = os.path.basename(__file__)
 
@@ -24,13 +27,18 @@ logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
 
-def load_data(file_path: str) -> pd.DataFrame:
+def load_data(file_id: str) -> pd.DataFrame:
     try:
-        train = pd.read_csv(
-            'https://raw.githubusercontent.com/akshatsharma2407/cars_ml_test/refs/heads/master/sample_all_cols.csv'
-        ).dropna().drop(columns='Unnamed: 0')
-        logger.info("train df fetched")
-        return train
+        url = f"https://drive.google.com/uc?id={file_id}"
+        output = 'data/external/ml.parquet'
+        
+        gdown.download(url, output, quiet=False)
+
+        df = pd.read_parquet(output)
+
+        train, test = train_test_split(df, test_size=0.2, shuffle=True)
+        logger.info("train & test df fetched")
+        return train, test
     except FileNotFoundError:
         logger.error(
             f"{file_name} -> load_data function: Data File does not exists at specified location"
@@ -43,10 +51,11 @@ def load_data(file_path: str) -> pd.DataFrame:
         raise
 
 
-def save_data(folder_path: str, train: pd.DataFrame) -> None:
+def save_data(folder_path: str, train: pd.DataFrame, test: pd.DataFrame) -> None:
     try:
         os.makedirs(folder_path, exist_ok=True)
         train.to_parquet(os.path.join(folder_path, "train.parquet"), index=False)
+        test.to_parquet(os.path.join(folder_path, "test.parquet"), index=False)
         logger.info("data saved in local")
     except ModuleNotFoundError:
         logger.error(
@@ -62,8 +71,9 @@ def save_data(folder_path: str, train: pd.DataFrame) -> None:
 
 def main() -> None:
     try:
-        train = load_data("data/Exp/train.parquet")
-        save_data(folder_path="data/raw", train=train)
+        file_id = os.getenv('TRAINING_DATA')
+        train, test = load_data(file_id)
+        save_data(folder_path="data/raw", train=train, test=test)
         logger.info("main function executed successfully")
     except:
         logger.critical(
