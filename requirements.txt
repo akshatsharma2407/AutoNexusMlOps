@@ -1,6 +1,7 @@
 isort
 black
 pymysql
+gdown
 mysql-connector-python
 python-multipart
 mysql
