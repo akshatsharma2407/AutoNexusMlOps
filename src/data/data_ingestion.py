@@ -30,8 +30,8 @@ logger.addHandler(file_handler)
 def load_data(file_id: str) -> pd.DataFrame:
     try:
         url = f"https://drive.google.com/uc?id={file_id}"
+        os.makedirs('data/external', exist_ok=True)
         output = 'data/external/ml.parquet'
-        print(url)
         
         gdown.download(url, output, quiet=False)
 
