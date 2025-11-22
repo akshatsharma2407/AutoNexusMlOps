@@ -164,6 +164,7 @@ def main() -> None:
             train_raw_data = load_data(
                 train_raw_data_path="data/raw/train.parquet"
             )
+
             encoder = load_encoder("models/encoder.joblib")
             regressor = create_model(
                 model_params=model_params
