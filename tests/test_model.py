@@ -31,7 +31,7 @@ class TestModelLoading(unittest.TestCase):
         model_uri = f"models:/{model_name}/{model_version}"
         cls.model = mlflow.pyfunc.load_model(model_uri)
 
-        cls.holdout_data = pd.read_csv("./data/raw/test.parquet")
+        cls.holdout_data = pd.read_parquet("./data/raw/test.parquet")
 
     @staticmethod
     def get_latest_model_version(model_name):
