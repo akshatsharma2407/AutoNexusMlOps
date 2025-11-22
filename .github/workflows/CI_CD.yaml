@@ -68,6 +68,7 @@ jobs:
       - name: run DVC Pipeline
         env:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+          TRAINING_DATA: ${{ secrets.TRAINING_DATA }}
         run: |
           dvc repro 
       
