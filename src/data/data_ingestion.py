@@ -44,7 +44,7 @@ def load_data(file_id: str) -> pd.DataFrame:
         # drop image list column
         df.drop(columns='Image_List', inplace=True)
 
-        train, test = train_test_split(df, test_size=0.2, shuffle=True)
+        train, test = train_test_split(df, test_size=0.1, shuffle=True, random_state=42)
         logger.info("train & test df fetched")
         return train, test
     except FileNotFoundError:

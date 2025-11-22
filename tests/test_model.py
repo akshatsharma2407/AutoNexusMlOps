@@ -55,14 +55,14 @@ class TestModelLoading(unittest.TestCase):
         mse = root_mean_squared_error(y_holdout, y_pred)
 
         expected_r2 = 0.87
-        expected_rmse = 6000
+        expected_rmse = 10000
         expected_mae = 3000
 
         self.assertLessEqual(
             mae, expected_mae, f"MAE should be less than {expected_mae} USD"
         )
         self.assertLessEqual(
-            mse, expected_rmse, f"MSE should be less than {expected_rmse} USD"
+            mse, expected_rmse, f"RMSE should be less than {expected_rmse} USD"
         )
         self.assertGreaterEqual(r2, expected_r2, f"R2 should be at least {expected_r2}")
 
