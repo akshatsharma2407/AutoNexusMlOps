@@ -37,9 +37,12 @@ def load_data(file_id: str) -> pd.DataFrame:
 
         df = pd.read_parquet(output)
 
-         # small debug, I have used the feature_engine library, which do not recognize string object, but need "object" type columns
+        # small debug, I have used the feature_engine library, which do not recognize string object, but need "object" type columns
         str_cols = df.select_dtypes(include="string").columns
         df[str_cols] = df[str_cols].astype("object")
+
+        # drop image list column
+        df.drop(columns='Image_List', inplace=True)
 
         train, test = train_test_split(df, test_size=0.2, shuffle=True)
         logger.info("train & test df fetched")
