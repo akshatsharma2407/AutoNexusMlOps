@@ -55,3 +55,50 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+## Project Workflow
+
+![AutoNexus MLOps Workflow](https://github.com/akshatsharma2407/my_portfolio/blob/main/images/flowdiag.png)
+
+---
+
+## Application Screenshots
+
+<table>
+  <tr>
+    <td align="center">
+      <strong>Home Page</strong><br/>
+      <img src="https://github.com/akshatsharma2407/my_portfolio/blob/main/images/main_page1.png" alt="AutoNexus Home Page" width="400"/>
+    </td>
+    <td align="center">
+      <strong>Prediction/Blogs & Insights</strong><br/>
+      <img src="https://github.com/akshatsharma2407/my_portfolio/blob/main/images/main_page2.png" alt="AutoNexus Dashboard" width="400"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>Price Prediction Form</strong><br/>
+      <img src="https://github.com/akshatsharma2407/my_portfolio/blob/main/images/prediction.png" alt="Price Prediction Page" width="400"/>
+    </td>
+  </tr>
+</table>
+
+---
+
+## DVC Pipeline
+
+![DVC Pipeline workflow on Dagshub](https://github.com/akshatsharma2407/my_portfolio/blob/main/images/dvc_pipeline.png)
+
+---
+
+## Experiment Tracking – DagsHub & MLflow
+
+![DagsHub MLflow Tracking](https://github.com/akshatsharma2407/my_portfolio/blob/main/images/mlflow_ui.png)
+
+---
+
+## Optuna Dashboard
+
+![Optuna for HyperParameter tuning & tracking results](https://github.com/akshatsharma2407/my_portfolio/blob/main/images/mlflow_ui.png)
+
+---
