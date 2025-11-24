@@ -99,6 +99,6 @@ Project Organization
 
 ## Optuna Dashboard
 
-![Optuna for HyperParameter tuning & tracking results](https://github.com/akshatsharma2407/my_portfolio/blob/main/images/mlflow_ui.png)
+![Optuna for HyperParameter tuning & tracking results](https://github.com/akshatsharma2407/my_portfolio/blob/main/images/optuna.png)
 
 ---
