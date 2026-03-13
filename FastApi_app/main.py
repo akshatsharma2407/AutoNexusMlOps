@@ -9,7 +9,6 @@ from typing import List
 from database import SessionLocal, Base, engine
 from prediction import prediction
 from load_model import load_model
-from auth import verify_password, create_access_token, verify_token
 from recommend import recommend_car_idx
 import json
 import requests
@@ -59,23 +58,6 @@ def category_page(request: Request, cat_name: str = Path(..., description='Categ
         }
     )
 
-@app.post('/register_user', response_model=schemas.UserOut)
-def register_user(user: schemas.User, db: Session = Depends(get_db)):
-    if user_service.get_user_details(db=db, email=user.email):
-        raise HTTPException(status_code=400, detail='User already Exists')
-    new_user = user_service.register_user(db=db, user=user)
-    return new_user
-
-@app.post('/token')
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user = user_service.get_user_details(db, form_data.username)
-    if not user:
-        raise HTTPException(status_code=400, detail='Invalid email')
-    if not verify_password(form_data.password, user.password_hash):
-        raise HTTPException(status_code=400, detail='Invalid Password')
-    
-    access_token = create_access_token(data={'sub':form_data.username})
-    return {'access_token' : access_token, 'token_type' : 'bearer'}
 
 @app.get('/cars/{brand_name}/{model_name}', response_model=List[schemas.CarOut])
 def get_cars(request: Request,
@@ -119,33 +101,6 @@ def get_car(request: Request, id: int = Path(..., description='id of car you wan
             'recommended_cars' : recommended_cars
         }
     )
-
-@app.post('/cars', response_model=schemas.CarOut)
-def create_car(car: schemas.CarCreate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
-    if verify_token(token):
-        return crud.create_car(db=db, new_car=car)
-    else:
-        raise HTTPException(status_code=401, detail='Unauthorized access or time out')
-
-@app.put('/cars/{id}')
-def update_car(car: schemas.CarUpdate, id: int = Path(..., description=('unique id of car')), db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
-    if verify_token(token):
-        db_car = crud.update_car(db=db, id=id, update_car=car)
-        if db_car is None:
-            raise HTTPException(status_code=404, detail='Car not found')
-        return db_car
-    else:
-        raise HTTPException(status_code=401, detail='Unauthorized access or time out')
-
-@app.delete('/cars/{id}')
-def delete_car(id: int = Path(..., description='unique id of car you want to update'), db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
-    if verify_token(token):
-        db_car = crud.delete_car(db=db, id=id)
-        if db_car is None:
-            raise HTTPException(status_code=404, detail='Car not found')
-        return JSONResponse(status_code=200, content='Car Deleted Succesfully')
-    else:
-        return HTTPException(status_code=401, detail='Unauthorized access or time out')
 
 @app.get('/predict/{cat}', response_class=HTMLResponse)
 def prediction_page(request: Request, cat: str = 'Electric'):

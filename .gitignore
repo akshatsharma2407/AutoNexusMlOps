@@ -4,6 +4,7 @@ __pycache__/
 ANenv
 /models/
 reports/run_info.json
+notebooks/data_to_db.ipynb
 
 # C extensions
 *.so

@@ -54,11 +54,6 @@ class CarBase(BaseModel):
     lat: Annotated[Optional[float], Field(default=None, description='latitude of dealer location')]
     LONG: Annotated[Optional[float], Field(default=None, description='Longitude of dealer location')]
 
-class CarCreate(CarBase):
-    pass
-
-class CarUpdate(CarBase):
-    pass
 
 class CarOut(CarBase):
     id: Annotated[int, Field(..., description='id of Car')]
@@ -186,19 +181,3 @@ class PredictionInputSchema(BaseModel):
 
 class PredictionOutputSchema(BaseModel):
     Price: Annotated[float, Field(..., description='Price of model predicted by ML algo')]
-
-
-class User(BaseModel):
-    first_name: Annotated[str, Field(..., description='first name of the person')]
-    last_name: Annotated[str, Field(..., description='last name of the person')]
-    email: Annotated[EmailStr, Field(..., description='email of the person')]
-    password_hash: Annotated[str, Field(..., description='password of user')]
-
-class UserOut(User):
-    id : int
-    is_active : bool
-    created_at : datetime
-    updated_at : datetime
-    
-    class Config:
-        from_attributes = True
