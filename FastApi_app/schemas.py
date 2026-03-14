@@ -61,6 +61,12 @@ class CarOut(CarBase):
     class Config:
         from_attributes = True
 
+class CarCreate(CarBase):
+    pass
+
+class CarUpdate(CarBase):
+    pass
+
 class PredictionInputSchema(BaseModel):
     Model_Year: Annotated[StrictInt, Field(default=None, description='Manufacture year of the car', examples=[1990,2026,2020])]
     Brand_Name: Annotated[str, Field(default=None, description='Brand of the Car', examples=['Audi', 'Mercedes', 'BMW'])]

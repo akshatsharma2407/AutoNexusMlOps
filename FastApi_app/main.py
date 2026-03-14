@@ -1,4 +1,4 @@
-import crud, schemas, user_service
+import crud, schemas
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, HTTPException, Depends, Path, Query, Request
 from fastapi.templating import Jinja2Templates
@@ -16,15 +16,12 @@ import requests
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
 cars = requests.get('https://raw.githubusercontent.com/akshatsharma2407/Car-Data-API/refs/heads/master/cars.json').json()
-
-model = None
 
 def get_db():
     db = SessionLocal()
@@ -59,7 +56,7 @@ def category_page(request: Request, cat_name: str = Path(..., description='Categ
     )
 
 
-@app.get('/cars/{brand_name}/{model_name}', response_model=List[schemas.CarOut])
+@app.get('/cars/{brand_name}/{model_name}', response_class=HTMLResponse)
 def get_cars(request: Request,
              brand_name: str = Path(..., description='name of brand'),
              model_name: str = Path(..., description='model name'),
@@ -112,7 +109,7 @@ def prediction_page(request: Request, cat: str = 'Electric'):
         }
     )
 
-@app.post('/prediction', response_model=schemas.PredictionOutputSchema)
+@app.post('/prediction', response_class=HTMLResponse)
 def predict_price(request: Request, car_details: schemas.PredictionInputSchema = Depends(schemas.PredictionInputSchema.as_form)):
     model = load_model()
     print(car_details)
